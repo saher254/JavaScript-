@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ساهر | دليل JavaScript وQUREO</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--text:#172033;--muted:#667085;--accent:#4263eb;--line:#dfe5ef;--code:#101827;--good:#137547;--bad:#b42318}body.dark{--bg:#0d1321;--card:#151e30;--text:#edf2ff;--muted:#a6b2c8;--accent:#7c96ff;--line:#2b3850;--code:#080d16;--good:#64d89a;--bad:#ff8c84}body.dark .navbtn:hover,body.dark .navbtn.active{background:#26365d;color:#fff}body.dark button.secondary{background:#2b3850;color:#edf2ff}body.dark .notice{background:#382f17;border-color:#746025;color:#fff0bf}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#243b83,#4263eb);color:white;padding:24px 16px}header .wrap,main{max-width:1000px;margin:auto}h1{margin:0 0 6px;font-size:clamp(1.5rem,5vw,2.3rem)}header p{margin:0;opacity:.95}
+main{padding:16px}.notice{background:#fff7db;border:1px solid #f2d675;border-radius:14px;padding:12px 14px;margin-bottom:16px}
+.layout{display:grid;grid-template-columns:1fr;gap:16px}@media(min-width:780px){.layout{grid-template-columns:270px 1fr}}
+nav,.panel,.lesson{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+nav{align-self:start}@media(min-width:780px){nav{position:sticky;top:12px;max-height:85vh;overflow:auto}}
+nav h2{font-size:1.1rem;margin:0 0 8px}.navbtn{display:block;width:100%;text-align:right;border:0;background:transparent;padding:10px;border-radius:10px;color:var(--text);font:inherit;cursor:pointer}.navbtn:disabled{opacity:.45;cursor:not-allowed}.navhead{display:flex;align-items:center;justify-content:space-between;gap:8px}.navhead button{padding:7px 10px}.locked-note{font-size:.82rem;color:var(--muted);padding:4px 10px 8px}.lesson-lock{background:#fff4d6;color:#694c00;border:1px solid #ecd48a;padding:10px;border-radius:10px;margin:10px 0}body.dark .lesson-lock{background:#3c3218;color:#ffe7a1;border-color:#78632a}
+.navbtn:hover,.navbtn.active{background:#e9efff;color:#2446c5;font-weight:700}
+.lesson h2{margin-top:0}.lesson h3{margin-bottom:4px}.lesson p{margin-top:6px}
+pre{direction:ltr;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--code);color:#e6edf7;border-radius:12px;padding:14px;font-size:.92rem;overflow:auto}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+button,.btn{border:0;border-radius:10px;background:var(--accent);color:white;padding:10px 14px;font:inherit;cursor:pointer}
+button.secondary{background:#e9edf5;color:#172033}button:focus-visible{outline:3px solid #f5b942}
+.output{background:#0b1220;color:#d6f5df;border-radius:12px;padding:12px;min-height:44px;white-space:pre-wrap;direction:ltr;text-align:left}
+.quiz{border-top:1px solid var(--line);margin-top:18px;padding-top:12px}.quiz label{display:block;padding:6px 0;cursor:pointer}
+.feedback{font-weight:700;margin-top:8px}.muted{color:var(--muted);font-size:.94rem}.tag{display:inline-block;background:#e8edff;color:#2746bb;padding:2px 9px;border-radius:999px;font-size:.82rem}
+footer{text-align:center;color:var(--muted);padding:20px}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h1>ساهر | دليل JavaScript التفاعلي</h1><p>شرح عربي وأكواد جاهزة وتدريبات — مناسب للموبايل</p></div><button id="themeToggle" class="secondary" style="background:#fff;color:#20336d">🌙 وضع الليل</button></div></div></header>
+<main>
+<div class="notice"><b>مهم:</b> هذا دليل تعليمي من إعدادنا يغطي مفاهيم شائعة في JavaScript مرتبطة بتعلّم البرمجة. ليس نسخة من منصة QUREO ولا ضمانًا بأنه يطابق كل دروسها أو ترتيبها الرسمي.</div>
+<div class="layout">
+<nav><div class="navhead"><h2 id="navTitle">الدرس الأول</h2><button id="toggleMenu" class="secondary" aria-expanded="false">☰ الدروس</button></div><div id="menu" hidden></div><p class="muted" id="navHint">حل سؤال الدرس واكتب الكود لفتح الدرس التالي.</p></nav>
+<section class="panel" id="content" aria-live="polite"></section>
+</div>
+</main>
+<footer>اتدرّب على فهم الكود وتتبع الناتج، وليس حفظه فقط.<br><b>للتواصل:</b> <a href="tel:01024897145" style="color:inherit">01024897145</a></footer>
+<script>
+const lessons = [
+{title:"1. ما هي البرمجة؟",tag:"مقدمة",desc:"البرنامج مجموعة أوامر مرتبة لحل مشكلة. في JavaScript نكتب الأوامر، ثم ينفذها المتصفح.",ex:"console.log('أهلًا يا ساهر');\nconsole.log(2 + 3);",explain:"console.log تعرض قيمة في وحدة الإخراج. السطر الأول يطبع رسالة، والثاني يطبع ناتج الجمع 5.",run:"console.log('أهلًا يا ساهر');\nconsole.log(2 + 3);",q:"ما ناتج 4 + 6؟",opts:["46","10","خطأ"],correct:1,why:"علامة + تجمع الأعداد؛ الناتج 10."},
+{title:"2. المتغيرات",tag:"let / const",desc:"المتغير اسم نخزن فيه قيمة. استخدم let عندما تتوقع تغيير القيمة، وconst للقيمة التي لن تعيد إسنادها.",ex:"let score = 10;\nscore = score + 5;\nconsole.log(score);\n\nconst student = 'ساهر';\nconsole.log(student);",explain:"بدأ score بقيمة 10 ثم زادت 5 فأصبح 15. لا يمكن إعادة إسناد قيمة جديدة إلى student المعرّف بـ const.",run:"let score = 10;\nscore = score + 5;\nconsole.log(score);\nconst student = 'ساهر';\nconsole.log(student);",q:"أي كلمة مناسبة لمتغير ستتغير قيمته؟",opts:["let","const","console"],correct:0,why:"let تسمح بإسناد قيمة جديدة للمتغير."},
+{title:"3. أنواع البيانات",tag:"Types",desc:"من الأنواع الشائعة: Number للأرقام، String للنصوص، Boolean للقيم true وfalse.",ex:"let age = 16;          // Number\nlet name = 'Ali';      // String\nlet passed = true;     // Boolean\nconsole.log(typeof age);\nconsole.log(typeof name);\nconsole.log(typeof passed);",explain:"typeof تساعد على معرفة نوع القيمة. لاحظ أن النص يوضع بين علامات اقتباس.",run:"let age = 16;\nlet name = 'Ali';\nlet passed = true;\nconsole.log(typeof age);\nconsole.log(typeof name);\nconsole.log(typeof passed);",q:"ما نوع القيمة '25' بين علامتي اقتباس؟",opts:["Number","String","Boolean"],correct:1,why:"وجود علامات الاقتباس يجعلها نصًا String حتى لو احتوت على أرقام."},
+{title:"4. العمليات الحسابية والمقارنة",tag:"Operators",desc:"العمليات: + و- و* و/. المقارنة: > و< و=== و!== وتُنتج عادة true أو false.",ex:"console.log(8 + 2);\nconsole.log(8 * 2);\nconsole.log(5 > 3);\nconsole.log(5 === '5');",explain:"=== تقارن القيمة والنوع معًا، لذلك 5 لا تساوي '5' مقارنة صارمة.",run:"console.log(8 + 2);\nconsole.log(8 * 2);\nconsole.log(5 > 3);\nconsole.log(5 === '5');",q:"ما ناتج 7 > 9؟",opts:["true","false","16"],correct:1,why:"7 ليست أكبر من 9، لذلك الناتج false."},
+{title:"5. الشروط if / else",tag:"Conditions",desc:"تُستخدم الشروط لاختيار مسار التنفيذ بحسب تحقق شرط.",ex:"let mark = 75;\nif (mark >= 50) {\n  console.log('ناجح');\n} else {\n  console.log('حاول مرة أخرى');\n}",explain:"إذا كانت الدرجة 50 أو أكثر تظهر كلمة ناجح؛ وإلا تظهر الرسالة الثانية.",run:"let mark = 75;\nif (mark >= 50) {\n  console.log('ناجح');\n} else {\n  console.log('حاول مرة أخرى');\n}",q:"إذا كانت mark = 40، أي رسالة تظهر؟",opts:["ناجح","حاول مرة أخرى","لا شيء"],correct:1,why:"40 أقل من 50، فيُنفّذ فرع else."},
+{title:"6. else if والشروط المتعددة",tag:"Else if",desc:"استخدم else if عندما توجد أكثر من حالة محتملة.",ex:"let mark = 82;\nif (mark >= 85) {\n  console.log('ممتاز');\n} else if (mark >= 70) {\n  console.log('جيد جدًا');\n} else {\n  console.log('استمر في التدريب');\n}",explain:"تُفحص الشروط بالترتيب. الدرجة 82 لا تحقق الشرط الأول، لكنها تحقق الثاني.",run:"let mark = 82;\nif (mark >= 85) {\n  console.log('ممتاز');\n} else if (mark >= 70) {\n  console.log('جيد جدًا');\n} else {\n  console.log('استمر في التدريب');\n}",q:"ما ناتج المثال إذا كانت mark = 90؟",opts:["ممتاز","جيد جدًا","استمر في التدريب"],correct:0,why:"90 تحقق الشرط الأول mark >= 85."},
+{title:"7. العوامل المنطقية",tag:"AND / OR / NOT",desc:"&& تعني أن الشرطين يجب أن يتحققا، || يكفي تحقق أحدهما، و! تعكس القيمة المنطقية.",ex:"let age = 16;\nlet hasCard = true;\nconsole.log(age >= 15 && hasCard);\nconsole.log(age < 12 || hasCard);\nconsole.log(!hasCard);",explain:"الأول true لأن الشرطين صحيحان. الثاني true لأن hasCard صحيحة. الثالث false لأنه يعكس true.",run:"let age = 16;\nlet hasCard = true;\nconsole.log(age >= 15 && hasCard);\nconsole.log(age < 12 || hasCard);\nconsole.log(!hasCard);",q:"متى تكون A && B صحيحة؟",opts:["عندما يكون أحدهما فقط صحيحًا","عندما يكون الاثنان صحيحين","عندما يكون الاثنان خطأ"],correct:1,why:"&& (AND) تحتاج إلى تحقق الشرطين."},
+{title:"8. التكرار while",tag:"Loops",desc:"تكرر while الأوامر ما دام الشرط صحيحًا. تأكد أن الشرط سيتغير حتى لا تدخل في حلقة لا تنتهي.",ex:"let i = 1;\nwhile (i <= 3) {\n  console.log(i);\n  i++;\n}",explain:"تطبع 1 ثم 2 ثم 3. بعد زيادة i إلى 4 يصبح الشرط خطأ وتتوقف الحلقة.",run:"let i = 1;\nwhile (i <= 3) {\n  console.log(i);\n  i++;\n}",q:"كم مرة تعمل الحلقة في المثال؟",opts:["مرتان","3 مرات","4 مرات"],correct:1,why:"تعمل عندما تكون i تساوي 1 و2 و3 فقط."},
+{title:"9. التكرار for",tag:"For",desc:"حلقة for مناسبة عندما تعرف غالبًا عدد مرات التكرار. تتكون من بداية وشرط وتحديث.",ex:"for (let i = 0; i < 4; i++) {\n  console.log(i);\n}",explain:"تبدأ i من 0 وتستمر ما دامت أقل من 4، فتطبع 0 و1 و2 و3.",run:"for (let i = 0; i < 4; i++) {\n  console.log(i);\n}",q:"ما آخر رقم يطبعه المثال؟",opts:["2","3","4"],correct:1,why:"عند وصول i إلى 4 يصبح الشرط i < 4 غير صحيح."},
+{title:"10. الدوال Functions",tag:"Functions",desc:"الدالة مجموعة أوامر نضعها تحت اسم، ويمكن استدعاؤها أكثر من مرة. قد تستقبل مدخلات وتعيد نتيجة.",ex:"function add(a, b) {\n  return a + b;\n}\nconsole.log(add(3, 4));",explain:"a وb معاملان. return تعيد نتيجة الجمع إلى مكان استدعاء الدالة، والناتج 7.",run:"function add(a, b) {\n  return a + b;\n}\nconsole.log(add(3, 4));",q:"ما وظيفة return؟",opts:["إنشاء حلقة","إرجاع قيمة من الدالة","طباعة الصفحة دائمًا"],correct:1,why:"return تعيد قيمة ويمكن أن تنهي تنفيذ الدالة."},
+{title:"11. المصفوفات Arrays",tag:"Arrays",desc:"المصفوفة تخزن عدة قيم في متغير واحد. يبدأ فهرس العنصر الأول من 0.",ex:"let fruits = ['تفاح', 'موز', 'عنب'];\nconsole.log(fruits[0]);\nconsole.log(fruits.length);\nfruits.push('برتقال');\nconsole.log(fruits);",explain:"fruits[0] هو العنصر الأول. length تعطي عدد العناصر، وpush تضيف عنصرًا في النهاية.",run:"let fruits = ['تفاح', 'موز', 'عنب'];\nconsole.log(fruits[0]);\nconsole.log(fruits.length);\nfruits.push('برتقال');\nconsole.log(fruits);",q:"ما فهرس العنصر الثاني؟",opts:["0","1","2"],correct:1,why:"الفهرسة تبدأ من صفر: الأول 0 والثاني 1."},
+{title:"12. التكرار على المصفوفة for...of",tag:"For of",desc:"for...of تمر على قيم عناصر المصفوفة واحدة تلو الأخرى.",ex:"let scores = [10, 20, 30];\nfor (const score of scores) {\n  console.log(score);\n}",explain:"في كل دورة تأخذ score قيمة العنصر التالي: 10 ثم 20 ثم 30.",run:"let scores = [10, 20, 30];\nfor (const score of scores) {\n  console.log(score);\n}",q:"كم قيمة ستُطبع؟",opts:["1","2","3"],correct:2,why:"المصفوفة تحتوي على ثلاثة عناصر."},
+{title:"13. النصوص Strings",tag:"Text",desc:"يمكن جمع النصوص باستخدام +، ومعرفة طول النص باستخدام length.",ex:"let first = 'Saher';\nlet greeting = 'Hello ' + first;\nconsole.log(greeting);\nconsole.log(first.length);",explain:"جمع النصوص يعني وصلها. طول Saher هو 5 أحرف.",run:"let first = 'Saher';\nlet greeting = 'Hello ' + first;\nconsole.log(greeting);\nconsole.log(first.length);",q:"ما ناتج 'Hi ' + 'Saher'؟",opts:["Hi Saher","Hi + Saher","خطأ"],correct:0,why:"عامل + يصل النصين معًا."},
+{title:"14. الكائنات Objects",tag:"Objects",desc:"الكائن يجمع خصائص مرتبطة بشيء واحد، وتُكتب غالبًا على هيئة مفتاح وقيمة.",ex:"const player = {\n  name: 'Saher',\n  score: 12\n};\nconsole.log(player.name);\nconsole.log(player.score);",explain:"نصل إلى الخاصية باستخدام اسم الكائن ثم نقطة ثم اسم الخاصية.",run:"const player = {\n  name: 'Saher',\n  score: 12\n};\nconsole.log(player.name);\nconsole.log(player.score);",q:"كيف نصل إلى score؟",opts:["player->score","player.score","score.player"],correct:1,why:"الطريقة المعتادة هي player.score."},
+{title:"15. التعليقات والأخطاء",tag:"Debugging",desc:"التعليق يشرح الكود ولا يُنفّذ. // لتعليق سطر، و/* ... */ لتعليق عدة أسطر.",ex:"// هذا تعليق\nlet total = 4 + 6;\nconsole.log(total); // الناتج 10",explain:"التعليقات مفيدة لتوضيح الفكرة. عند وجود خطأ، اقرأ رسالة الخطأ ورقم السطر وافحص الأقواس وعلامات الاقتباس وأسماء المتغيرات.",run:"// جرّب تعديل الرقمين\nlet total = 4 + 6;\nconsole.log(total);",q:"هل يُنفّذ السطر الذي يبدأ بـ //؟",opts:["نعم","لا، إنه تعليق","فقط في الحلقات"],correct:1,why:"المتصفح يتجاهل التعليق أحادي السطر."},
+{title:"16. أساسيات HTML وCSS",tag:"Web",desc:"HTML لبناء عناصر الصفحة، وCSS لتنسيقها، وJavaScript لإضافة التفاعل. هذه مقدمة عامة وليست بديلًا عن درس المنصة.",ex:"<!-- HTML -->\n<h1>مرحبًا</h1>\n<button id=\"btn\">اضغط</button>\n\n/* CSS */\nbutton { padding: 10px; }",explain:"HTML يحدد العنوان والزر، وCSS يغير مظهر الزر. يمكن لـJavaScript الاستجابة عند الضغط عليه.",run:"console.log('HTML للبنية، CSS للتنسيق، JavaScript للتفاعل');",q:"أي لغة تُستخدم عادة لتنسيق ألوان العناصر؟",opts:["CSS","JavaScript فقط","console.log"],correct:0,why:"CSS مسؤولة عن تنسيق المظهر."},
+{title:"17. الأحداث والتفاعل",tag:"Events",desc:"الحدث يحدث مثل ضغط زر. في صفحات الويب نستطيع ربطه بأمر JavaScript.",ex:"document.querySelector('#btn').addEventListener('click', () => {\n  alert('أهلًا بك!');\n});",explain:"هذا المثال يعمل داخل صفحة HTML تحتوي زرًا بالمعرّف btn. عند الضغط عليه تظهر رسالة. لا يعمل وحده في بيئة console فقط.",run:"console.log('الأحداث تجعل الصفحة تستجيب للمستخدم.');",q:"متى يعمل حدث click؟",opts:["عند الضغط على العنصر","عند إغلاق الجهاز","عند كتابة تعليق"],correct:0,why:"click هو حدث النقر على العنصر."},
+{title:"18. خوارزميات وحل المشكلات",tag:"Algorithms",desc:"الخوارزمية خطوات واضحة ومرتبة لحل مشكلة. قبل كتابة الكود، حدّد المدخلات والمخرجات والخطوات.",ex:"// المطلوب: إيجاد الأكبر بين رقمين\nlet a = 12;\nlet b = 9;\nif (a > b) {\n  console.log(a);\n} else {\n  console.log(b);\n}",explain:"المدخلات رقمين، والخطوة هي المقارنة، والمخرج الرقم الأكبر. هذه طريقة تفكير عامة قابلة للتطبيق في لغات مختلفة.",run:"let a = 12;\nlet b = 9;\nif (a > b) {\n  console.log(a);\n} else {\n  console.log(b);\n}",q:"ما أول خطوة جيدة لحل مسألة برمجية؟",opts:["كتابة كود عشوائي","فهم المطلوب وتحديد المدخلات والمخرجات","حذف المتغيرات"],correct:1,why:"فهم المشكلة يوجّه اختيار الخوارزمية والكود."},
+{title:"19. الدوال السهمية Arrow Functions",tag:"Functions",desc:"الدالة السهمية طريقة مختصرة لكتابة الدوال في JavaScript.",ex:"const double = (n) => n * 2;\nconsole.log(double(6));",explain:"تستقبل الدالة n ثم تعيد n * 2. في التعبير المختصر لا نحتاج إلى كتابة return صراحة.",run:"const double = (n) => n * 2;\nconsole.log(double(6));",q:"ما ناتج double(6)؟",opts:["8","12","36"],correct:1,why:"6 × 2 = 12."},
+{title:"20. معاملات الدوال والقيم الافتراضية",tag:"Parameters",desc:"يمكن للدالة استقبال معاملات، ويمكن إعطاء المعامل قيمة افتراضية إذا لم يرسل المستدعي قيمة.",ex:"function greet(name = 'صديق') {\n  return 'أهلًا ' + name;\n}\nconsole.log(greet());\nconsole.log(greet('ساهر'));",explain:"عند استدعاء greet() تستخدم القيمة الافتراضية، وعند تمرير اسم تستخدمه بدلًا منها.",run:"function greet(name = 'صديق') {\n  return 'أهلًا ' + name;\n}\nconsole.log(greet());\nconsole.log(greet('ساهر'));",q:"ما الاسم المستخدم عند استدعاء greet() دون مدخل؟",opts:["ساهر","صديق","undefined دائمًا"],correct:1,why:"القيمة الافتراضية هي صديق."},
+{title:"21. النطاق Scope",tag:"Scope",desc:"النطاق يحدد أين يمكن الوصول إلى المتغير. المتغير المعرّف داخل دالة باستخدام let أو const لا يكون متاحًا خارجها.",ex:"let school = 'مدرستي';\nfunction showSchool() {\n  let room = 'الفصل';\n  console.log(school);\n  console.log(room);\n}\nshowSchool();",explain:"الدالة تستطيع قراءة school المعرّف خارجها، أما room فهو محلي داخل الدالة.",run:"let school = 'مدرستي';\nfunction showSchool() {\n  let room = 'الفصل';\n  console.log(school);\n  console.log(room);\n}\nshowSchool();",q:"أين يمكن الوصول إلى المتغير المحلي room؟",opts:["داخل الدالة التي عرّفته","من كل مكان دائمًا","لا يمكن استخدامه مطلقًا"],correct:0,why:"المتغير المحلي نطاقه محدود بالكتلة أو الدالة التي عُرّف فيها."},
+{title:"22. دوال المصفوفات map",tag:"Array map",desc:"map تنشئ مصفوفة جديدة بتحويل كل عنصر في المصفوفة الأصلية.",ex:"const nums = [1, 2, 3];\nconst doubled = nums.map(n => n * 2);\nconsole.log(doubled);",explain:"كل عنصر يُضرب في 2؛ النتيجة مصفوفة جديدة [2, 4, 6] دون تعديل المصفوفة الأصلية.",run:"const nums = [1, 2, 3];\nconst doubled = nums.map(n => n * 2);\nconsole.log(doubled);",q:"ما نتيجة map في المثال؟",opts:["[1, 2, 3]","[2, 4, 6]","6 فقط"],correct:1,why:"map تعيد قيمة جديدة لكل عنصر."},
+{title:"23. دوال المصفوفات filter",tag:"Array filter",desc:"filter تنشئ مصفوفة جديدة تحتوي العناصر التي تحقق الشرط فقط.",ex:"const nums = [3, 8, 11, 4];\nconst big = nums.filter(n => n > 5);\nconsole.log(big);",explain:"العناصر الأكبر من 5 هي 8 و11، لذلك تكون النتيجة [8, 11].",run:"const nums = [3, 8, 11, 4];\nconst big = nums.filter(n => n > 5);\nconsole.log(big);",q:"ما العناصر التي ستبقى بعد filter؟",opts:["[3, 4]","[8, 11]","كل العناصر"],correct:1,why:"الشرط n > 5 ينطبق على 8 و11."},
+{title:"24. طرق التعامل مع الكائنات",tag:"Object methods",desc:"يمكن وضع دالة داخل كائن لتكون سلوكًا مرتبطًا به، كما يمكن تعديل خصائصه.",ex:"const player = {\n  name: 'Saher',\n  sayHello() {\n    return 'أهلًا ' + this.name;\n  }\n};\nconsole.log(player.sayHello());",explain:"this.name تشير هنا إلى خاصية name في الكائن الذي استُدعيت منه الدالة.",run:"const player = {\n  name: 'Saher',\n  sayHello() {\n    return 'أهلًا ' + this.name;\n  }\n};\nconsole.log(player.sayHello());",q:"في هذا المثال، ماذا تعني this.name؟",opts:["خاصية name في الكائن","اسم ملف JavaScript","قيمة عشوائية"],correct:0,why:"عند الاستدعاء player.sayHello() تشير this إلى player."},
+{title:"25. التعامل مع عناصر الصفحة DOM",tag:"DOM",desc:"DOM يتيح لـJavaScript قراءة عناصر HTML وتغيير محتواها. هذا المثال يحتاج إلى صفحة فيها عنصر بالمعرّف message.",ex:"const message = document.querySelector('#message');\nmessage.textContent = 'تم تغيير النص!';",explain:"querySelector تختار أول عنصر يطابق المحدد، وtextContent تغيّر النص الظاهر بداخله. المثال يحتاج إلى HTML مناسب.",run:"console.log('DOM يسمح لـJavaScript بتغيير عناصر صفحة الويب.');",q:"ما وظيفة textContent؟",opts:["تغيير النص داخل العنصر","إنشاء قاعدة بيانات","تكرار حلقة"],correct:0,why:"textContent تقرأ أو تضبط النص داخل عنصر DOM."},
+{title:"26. استقبال إدخال المستخدم",tag:"Input",desc:"يمكن قراءة ما يكتبه المستخدم داخل حقل HTML ثم التعامل معه باستخدام JavaScript.",ex:"// HTML: <input id=\"name\" value=\"ساهر\">\nconst input = document.querySelector('#name');\nconsole.log(input.value);",explain:"خاصية value تحتوي القيمة الحالية لحقل الإدخال. يجب وجود العنصر id=\"name\" في الصفحة.",run:"console.log('قيمة الحقل تُقرأ باستخدام العنصر.value');",q:"ما الخاصية التي تقرأ النص المكتوب في input؟",opts:["input.value","input.length فقط","input.click"],correct:0,why:"value هي قيمة حقل الإدخال."},
+{title:"27. الأرقام العشوائية وMath",tag:"Math",desc:"كائن Math يوفر عمليات رياضية. Math.random() يعطي رقمًا من 0 إلى أقل من 1.",ex:"const randomValue = Math.random();\nconsole.log(randomValue);\nconst dice = Math.floor(Math.random() * 6) + 1;\nconsole.log(dice);",explain:"ضرب الرقم العشوائي في 6 ثم أخذ الجزء الصحيح وإضافة 1 يعطي عددًا صحيحًا من 1 إلى 6.",run:"console.log('Math.random() ينتج قيمة من 0 إلى أقل من 1');",q:"ما المجال الممكن لقيمة dice؟",opts:["0 إلى 5","1 إلى 6","1 إلى 7"],correct:1,why:"الصيغة Math.floor(random * 6) + 1 تنتج 1 إلى 6."},
+{title:"28. معالجة الأخطاء try / catch",tag:"Errors",desc:"try/catch تسمح بالتعامل مع بعض الأخطاء أثناء التشغيل بدل توقف البرنامج دون معالجة.",ex:"try {\n  JSON.parse('{bad json}');\n} catch (error) {\n  console.log('حدث خطأ في البيانات');\n}",explain:"عندما تفشل محاولة تحليل النص كـJSON، ينتقل التنفيذ إلى catch. لا تُستخدم هذه البنية لإخفاء كل الأخطاء دون فهمها.",run:"try {\n  JSON.parse('{bad json}');\n} catch (error) {\n  console.log('حدث خطأ في البيانات');\n}",q:"متى يُنفّذ catch في المثال؟",opts:["عندما لا يوجد خطأ","عند حدوث خطأ داخل try","قبل try دائمًا"],correct:1,why:"catch تعالج الاستثناء الذي وقع في try."},
+{title:"29. JSON وتحويل البيانات",tag:"JSON",desc:"JSON صيغة نصية شائعة لتبادل البيانات. JSON.stringify تحول قيمة إلى نص، وJSON.parse تحول نص JSON صالحًا إلى قيمة.",ex:"const student = {name: 'Saher', mark: 90};\nconst textData = JSON.stringify(student);\nconsole.log(textData);\nconst again = JSON.parse(textData);\nconsole.log(again.mark);",explain:"يُحوّل الكائن إلى نص JSON ثم نعيد تحويل النص إلى كائن ونقرأ mark.",run:"const student = {name: 'Saher', mark: 90};\nconst textData = JSON.stringify(student);\nconsole.log(textData);\nconst again = JSON.parse(textData);\nconsole.log(again.mark);",q:"ما وظيفة JSON.parse؟",opts:["تحويل نص JSON صالح إلى قيمة","تلوين الصفحة","إنشاء حلقة"],correct:0,why:"JSON.parse تحلل نص JSON."},
+{title:"30. التخزين المحلي localStorage",tag:"Browser storage",desc:"localStorage يخزن نصوصًا في متصفح الجهاز حتى بعد إغلاق الصفحة، ما لم تُمسح البيانات. لا تخزن فيه كلمات مرور أو بيانات حساسة.",ex:"localStorage.setItem('nickname', 'Saher');\nconst savedName = localStorage.getItem('nickname');\nconsole.log(savedName);",explain:"setItem تحفظ قيمة نصية باسم مفتاح، وgetItem تسترجعها. هذا المثال يعمل في صفحة ويب ضمن المتصفح، وليس في كل بيئات تشغيل JavaScript.",run:"console.log('localStorage متاح عادة داخل صفحات الويب.');",q:"ما وظيفة getItem؟",opts:["حفظ قيمة جديدة فقط","قراءة قيمة مخزنة","حذف المتصفح"],correct:1,why:"getItem تقرأ القيمة المرتبطة بالمفتاح."}
+
+];
+let current=0;
+let currentExam=null;
+const completedLessons = new Set();
+const passedExams = new Set();
+const menu=document.getElementById('menu'), content=document.getElementById('content');
+const navTitle=document.getElementById('navTitle');
+const toggleMenu=document.getElementById('toggleMenu');
+toggleMenu.addEventListener('click',()=>{
+ const isOpen=!menu.hidden;
+ menu.hidden=isOpen;
+ toggleMenu.setAttribute('aria-expanded',String(!isOpen));
+ toggleMenu.textContent=isOpen?'☰ الدروس':'✕ إغلاق القائمة';
+});
+function isLessonUnlocked(i){return i===0 || completedLessons.has(i-1)}
+function renderMenu(){
+ menu.innerHTML='';
+ lessons.forEach((l,i)=>{
+   const b=document.createElement('button');
+   const unlocked=isLessonUnlocked(i);
+   b.className='navbtn'+(!currentExam&&i===current?' active':'');
+   b.disabled=!unlocked;
+   const done=completedLessons.has(i);
+   b.textContent=(done?'✅ ':unlocked?'📘 ':'🔒 ')+l.title;
+   b.onclick=()=>{
+     if(!isLessonUnlocked(i)){return}
+     current=i;currentExam=null;renderMenu();renderLesson();
+   };
+   menu.appendChild(b);
+   if((i+1)%5===0){
+     const examNo=(i+1)/5;
+     const examUnlocked=Array.from({length:5},(_,j)=>completedLessons.has(startIndex(examNo)+j)).every(Boolean);
+     const e=document.createElement('button');
+     e.className='navbtn'+(currentExam===examNo?' active':'');
+     e.disabled=!examUnlocked;
+     e.textContent=(passedExams.has(examNo)?'✅ ':examUnlocked?'📝 ':'🔒 ')+'امتحان بعد الدرس '+(i+1);
+     e.onclick=()=>{if(!examUnlocked)return;currentExam=examNo;renderMenu();renderExam(examNo)};
+     menu.appendChild(e);
+   }
+ });
+ navTitle.textContent=currentExam?'امتحان '+currentExam:lessons[current].title;
+}
+function startIndex(examNo){return (examNo-1)*5}
+function normalizeCode(s){return s.replace(/\/\/.*$/gm,'').replace(/\/\*[\s\S]*?\*\//g,'').replace(/\s+/g,'').trim()}
+function lessonCodePassed(){
+ const l=lessons[current];
+ const typed=document.getElementById('studentCode')?.value||'';
+ return typed.trim()!=='' && normalizeCode(typed)===normalizeCode(l.ex);
+}
+function lessonQuestionPassed(){
+ const chosen=document.querySelector('input[name="answer"]:checked');
+ return !!chosen && Number(chosen.value)===lessons[current].correct;
+}
+function updateContinueState(){
+ const btn=document.getElementById('completeLesson');
+ if(!btn)return;
+ const codeOk=lessonCodePassed(), questionOk=lessonQuestionPassed();
+ btn.disabled=!(codeOk&&questionOk);
+ const state=document.getElementById('requirementsState');
+ if(state)state.textContent=`حالة التقدم: ${codeOk?'✅ الكود مكتوب بشكل مطابق':'🔒 اكتب الكود بشكل مطابق'} — ${questionOk?'✅ إجابة السؤال صحيحة':'🔒 أجب عن السؤال إجابة صحيحة'}`;
+}
+function renderLesson(){
+ currentExam=null;
+ const l=lessons[current];
+ const alreadyDone=completedLessons.has(current);
+ content.innerHTML=`
+ <span class="tag">${l.tag}</span><h2>${l.title}</h2><p>${l.desc}</p>
+ <h3>الكود الذي نشرحه</h3><pre><code>${escapeHTML(l.ex)}</code></pre>
+ <h3>الشرح</h3><p>${l.explain}</p>
+ <div class="actions"><button id="run">جرّب المثال</button><button class="secondary" id="copy">نسخ الكود</button></div>
+ <div class="output" id="output">اضغط «جرّب المثال» لعرض الناتج هنا.</div>
+ <div class="quiz"><h3>✍️ الخطوة الأولى: اكتب الكود بنفسك</h3>
+ <p>أعد كتابة المثال الموجود أعلى الدرس في المربع التالي. لن يُفتح الدرس التالي حتى تكتب الكود بصورة مطابقة وتجيب عن السؤال الأخير إجابة صحيحة.</p>
+ <textarea id="studentCode" rows="7" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--text);font:14px/1.6 ui-monospace,monospace;direction:ltr;text-align:left" placeholder="اكتب كود JavaScript هنا..."></textarea>
+ <div class="actions"><button id="checkCode">راجع كودي</button><button class="secondary" id="clearCode">مسح المربع</button></div><div class="feedback" id="codeFeedback"></div></div>
+ <div class="quiz"><h3>🧠 الخطوة الثانية: سؤال نهاية الدرس</h3><p>${l.q}</p><div id="options">${l.opts.map((o,i)=>`<label><input type="radio" name="answer" value="${i}"> ${o}</label>`).join('')}</div><button id="check">تحقق من الإجابة</button><div class="feedback" id="feedback"></div></div>
+ <div class="lesson-lock" id="requirementsState">🔒 اكتب الكود بشكل مطابق وأجب عن السؤال إجابة صحيحة لفتح الدرس التالي.</div>
+ <div class="actions"><button class="secondary" id="prev" ${current===0?'disabled':''}>الدرس السابق</button><button id="completeLesson" ${alreadyDone?'':'disabled'}>${alreadyDone?'تم اجتياز الدرس ✓':'اجتياز الدرس وفتح التالي 🔒'}</button></div>
+ <p class="muted">الدرس ${current+1} من ${lessons.length}. بعد كل خمسة دروس، اجتز امتحانًا من خمسة أسئلة لفتح مجموعة الدروس التالية.</p>`;
+ document.getElementById('run').onclick=()=>{document.getElementById('output').textContent=simulate(l.run)};
+ document.getElementById('copy').onclick=async()=>{try{await navigator.clipboard.writeText(l.ex);document.getElementById('output').textContent='تم نسخ الكود إذا سمح المتصفح بذلك.'}catch(e){document.getElementById('output').textContent='النسخ التلقائي غير متاح هنا. حدّد الكود وانسخه يدويًا.'}};
+ document.getElementById('checkCode').onclick=()=>{
+   const typed=document.getElementById('studentCode').value;
+   const f=document.getElementById('codeFeedback');
+   if(!typed.trim()){f.textContent='اكتب الكود أولًا ثم راجعه.';f.style.color='var(--bad)'}
+   else if(normalizeCode(typed)===normalizeCode(l.ex)){f.textContent='ممتاز! الكود مطابق للمثال.';f.style.color='var(--good)'}
+   else {f.textContent='فيه اختلاف. راجع أسماء المتغيرات والأقواس وعلامات الاقتباس وترتيب الأوامر، ثم حاول مرة أخرى.';f.style.color='var(--bad)'}
+   updateContinueState();
+ };
+ document.getElementById('clearCode').onclick=()=>{document.getElementById('studentCode').value='';document.getElementById('codeFeedback').textContent='';updateContinueState()};
+ document.getElementById('studentCode').addEventListener('input',updateContinueState);
+ document.getElementById('check').onclick=()=>{
+   const chosen=document.querySelector('input[name="answer"]:checked');const f=document.getElementById('feedback');
+   if(!chosen){f.textContent='اختَر إجابة أولًا.';f.style.color='var(--bad)'}
+   else {const ok=Number(chosen.value)===l.correct;f.textContent=(ok?'إجابة صحيحة! ':'إجابة غير صحيحة. ')+l.why;f.style.color=ok?'var(--good)':'var(--bad)'}
+   updateContinueState();
+ };
+ document.querySelectorAll('input[name="answer"]').forEach(el=>el.addEventListener('change',updateContinueState));
+ document.getElementById('prev').onclick=()=>{if(current>0){current--;currentExam=null;renderMenu();renderLesson();window.scrollTo(0,0)}};
+ document.getElementById('completeLesson').onclick=()=>{
+   if(!lessonCodePassed()||!lessonQuestionPassed())return;
+   completedLessons.add(current);
+   renderMenu();
+   const btn=document.getElementById('completeLesson');
+   btn.textContent='تم اجتياز الدرس ✓';
+   btn.disabled=true;
+   const state=document.getElementById('requirementsState');
+   state.textContent='✅ اجتزت الدرس! أصبح بإمكانك الانتقال إلى الدرس التالي.';
+   state.style.background='var(--card)';state.style.color='var(--good)';
+   if(current<lessons.length-1){
+     const next=document.createElement('button');
+     next.id='goNext';next.textContent='الانتقال إلى الدرس التالي ←';
+     next.onclick=()=>{current++;renderMenu();renderLesson();window.scrollTo(0,0)};
+     btn.insertAdjacentElement('afterend',next);
+   } else {
+     state.textContent='🎉 رائع! أكملت جميع الدروس. راجع الامتحانات المتاحة من قائمة الدروس.';
+   }
+ };
+ updateContinueState();
+}
+function renderExam(examNo){
+ const start=startIndex(examNo);
+ const group=lessons.slice(start,start+5);
+ if(group.length<5){content.innerHTML='<h2>الامتحان غير متاح</h2><p>أضف خمسة دروس كاملة قبل هذا الامتحان.</p>';return}
+ content.innerHTML=`<span class="tag">امتحان مراجعة</span><h2>امتحان ${examNo} — بعد الدرس ${examNo*5}</h2><p>خمسة أسئلة من الدروس السابقة. يجب الإجابة عن الأسئلة الخمسة بشكل صحيح لفتح المجموعة التالية.</p>
+ <form id="examForm">${group.map((l,i)=>`<div class="quiz"><b>${i+1}. ${l.q}</b>${l.opts.map((o,j)=>`<label><input type="radio" name="exam${i}" value="${j}"> ${o}</label>`).join('')}<div class="muted">الموضوع: ${l.title}</div></div>`).join('')}
+ <div class="actions"><button type="submit">تصحيح الامتحان</button><button type="button" class="secondary" id="retryExam">إعادة المحاولة</button></div></form><div id="examResult" class="output">أجب عن الأسئلة الخمسة ثم صحح الامتحان.</div><div id="examReview"></div>
+ <div class="actions"><button class="secondary" id="backLessons">العودة إلى الدروس</button></div>`;
+ document.getElementById('examForm').onsubmit=(ev)=>{
+   ev.preventDefault();let score=0;let review='';
+   group.forEach((l,i)=>{const chosen=document.querySelector('input[name="exam'+i+'"]:checked');const ok=chosen&&Number(chosen.value)===l.correct;if(ok)score++;review+=`<p><b>السؤال ${i+1}:</b> ${ok?'صحيح ✅':'غير صحيح ❌'} — ${l.why}</p>`});
+   document.getElementById('examResult').textContent=`نتيجتك: ${score} من 5`;
+   document.getElementById('examReview').innerHTML=review;
+   if(score===5){
+     passedExams.add(examNo);
+     renderMenu();
+     const note=document.createElement('div');note.className='lesson-lock';note.textContent='🎉 ممتاز! حصلت على 5 من 5. أصبحت الدروس التالية مفتوحة.';document.getElementById('examReview').appendChild(note);
+     const nextStart=start+5;
+     if(nextStart<lessons.length){
+       const go=document.createElement('button');go.textContent='ابدأ الدرس التالي ←';go.onclick=()=>{current=nextStart;currentExam=null;renderMenu();renderLesson();window.scrollTo(0,0)};document.getElementById('examReview').appendChild(go);
+     }
+   } else {
+     const note=document.createElement('div');note.className='lesson-lock';note.textContent='تحتاج إلى 5 من 5 لفتح المجموعة التالية. راجع الإجابات وحاول مرة أخرى.';document.getElementById('examReview').appendChild(note);
+   }
+ };
+ document.getElementById('retryExam').onclick=()=>{document.getElementById('examForm').reset();document.getElementById('examResult').textContent='تمت إعادة ضبط الامتحان.';document.getElementById('examReview').innerHTML=''};
+ document.getElementById('backLessons').onclick=()=>{current=start+4;currentExam=null;renderMenu();renderLesson()};
+}
+function escapeHTML(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function simulate(code){
+ // Safe, small educational simulator for the examples in this course; it does not execute arbitrary code.
+ const known={
+ "console.log('أهلًا يا ساهر');\nconsole.log(2 + 3);":"أهلًا يا ساهر\n5",
+ "let score = 10;\nscore = score + 5;\nconsole.log(score);\nconst student = 'ساهر';\nconsole.log(student);":"15\nساهر",
+ "let age = 16;\nlet name = 'Ali';\nlet passed = true;\nconsole.log(typeof age);\nconsole.log(typeof name);\nconsole.log(typeof passed);":"number\nstring\nboolean",
+ "console.log(8 + 2);\nconsole.log(8 * 2);\nconsole.log(5 > 3);\nconsole.log(5 === '5');":"10\n16\ntrue\nfalse",
+ "let mark = 75;\nif (mark >= 50) {\n  console.log('ناجح');\n} else {\n  console.log('حاول مرة أخرى');\n}":"ناجح",
+ "let mark = 82;\nif (mark >= 85) {\n  console.log('ممتاز');\n} else if (mark >= 70) {\n  console.log('جيد جدًا');\n} else {\n  console.log('استمر في التدريب');\n}":"جيد جدًا",
+ "let age = 16;\nlet hasCard = true;\nconsole.log(age >= 15 && hasCard);\nconsole.log(age < 12 || hasCard);\nconsole.log(!hasCard);":"true\ntrue\nfalse",
+ "let i = 1;\nwhile (i <= 3) {\n  console.log(i);\n  i++;\n}":"1\n2\n3",
+ "for (let i = 0; i < 4; i++) {\n  console.log(i);\n}":"0\n1\n2\n3",
+ "function add(a, b) {\n  return a + b;\n}\nconsole.log(add(3, 4));":"7",
+ "let fruits = ['تفاح', 'موز', 'عنب'];\nconsole.log(fruits[0]);\nconsole.log(fruits.length);\nfruits.push('برتقال');\nconsole.log(fruits);":"تفاح\n3\nتفاح,موز,عنب,برتقال",
+ "let scores = [10, 20, 30];\nfor (const score of scores) {\n  console.log(score);\n}":"10\n20\n30",
+ "let first = 'Saher';\nlet greeting = 'Hello ' + first;\nconsole.log(greeting);\nconsole.log(first.length);":"Hello Saher\n5",
+ "const player = {\n  name: 'Saher',\n  score: 12\n};\nconsole.log(player.name);\nconsole.log(player.score);":"Saher\n12",
+ "// جرّب تعديل الرقمين\nlet total = 4 + 6;\nconsole.log(total);":"10",
+ "console.log('HTML للبنية، CSS للتنسيق، JavaScript للتفاعل');":"HTML للبنية، CSS للتنسيق، JavaScript للتفاعل",
+ "console.log('الأحداث تجعل الصفحة تستجيب للمستخدم.');":"الأحداث تجعل الصفحة تستجيب للمستخدم.",
+ "let a = 12;\nlet b = 9;\nif (a > b) {\n  console.log(a);\n} else {\n  console.log(b);\n}":"12"
+ };
+ return known[code] ?? "عرض الناتج المباشر متاح للأمثلة التعليمية المجهزة فقط. اقرأ الشرح، أو انسخ الكود إلى محرر JavaScript لتجربته.";
+}
+renderMenu();renderLesson();
+const themeToggle=document.getElementById('themeToggle');
+themeToggle.addEventListener('click',()=>{
+ document.body.classList.toggle('dark');
+ const isDark=document.body.classList.contains('dark');
+ themeToggle.textContent=isDark?'☀️ وضع النهار':'🌙 وضع الليل';
+ themeToggle.style.background=isDark?'#26365d':'#fff';
+ themeToggle.style.color=isDark?'#fff':'#20336d';
+});
+</script>
+</body>
+</html>
