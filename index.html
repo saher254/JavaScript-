@@ -1,0 +1,1121 @@
+<!doctype html>
+
+<html lang="ar" dir="rtl">
+<head>
+<meta name="google-site-verification" content="ltuvLxOuFWh2FWhtzGqQqytLVX21KCqHahbfxgPcknw" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>برمجة جافا سكريبت ساهر</title>
+<meta name="description" content="موقع برمجة جافا سكريبت ساهر لتعلم JavaScript باللغة العربية من خلال دروس تفاعلية وأسئلة وتطبيقات عملية.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:title" content="برمجة جافا سكريبت ساهر">
+<meta property="og:description" content="دروس JavaScript تفاعلية بالعربية مع أسئلة وتطبيقات عملية وامتحانات.">
+<meta name="theme-color" content="#243b83">
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--text:#172033;--muted:#667085;--accent:#4263eb;--line:#dfe5ef;--code:#101827;--good:#137547;--bad:#b42318}body.dark{--bg:#0d1321;--card:#151e30;--text:#edf2ff;--muted:#a6b2c8;--accent:#7c96ff;--line:#2b3850;--code:#080d16;--good:#64d89a;--bad:#ff8c84}body.dark .navbtn:hover,body.dark .navbtn.active{background:#26365d;color:#fff}body.dark button.secondary{background:#2b3850;color:#edf2ff}body.dark .notice{background:#382f17;border-color:#746025;color:#fff0bf}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#243b83,#4263eb);color:white;padding:24px 16px}header .wrap,main{max-width:1000px;margin:auto}h1{margin:0 0 6px;font-size:clamp(1.5rem,5vw,2.3rem)}header p{margin:0;opacity:.95}
+main{padding:16px}.notice{background:#fff7db;border:1px solid #f2d675;border-radius:14px;padding:12px 14px;margin-bottom:16px}
+.layout{display:grid;grid-template-columns:1fr;gap:16px}@media(min-width:780px){.layout{grid-template-columns:270px 1fr}}
+nav,.panel,.lesson{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+nav{align-self:start}@media(min-width:780px){nav{position:sticky;top:12px;max-height:85vh;overflow:auto}}
+nav h2{font-size:1.1rem;margin:0 0 8px}.navbtn{display:block;width:100%;text-align:right;border:0;background:transparent;padding:10px;border-radius:10px;color:var(--text);font:inherit;cursor:pointer}.navbtn:disabled{opacity:.45;cursor:not-allowed}.navhead{display:flex;align-items:center;justify-content:space-between;gap:8px}.navhead button{padding:7px 10px}.locked-note{font-size:.82rem;color:var(--muted);padding:4px 10px 8px}.lesson-lock{background:#fff4d6;color:#694c00;border:1px solid #ecd48a;padding:10px;border-radius:10px;margin:10px 0}body.dark .lesson-lock{background:#3c3218;color:#ffe7a1;border-color:#78632a}
+.navbtn:hover,.navbtn.active{background:#e9efff;color:#2446c5;font-weight:700}
+.lesson h2{margin-top:0}.lesson h3{margin-bottom:4px}.lesson p{margin-top:6px}
+pre{direction:ltr;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--code);color:#e6edf7;border-radius:12px;padding:14px;font-size:.92rem;overflow:auto}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+button,.btn{border:0;border-radius:10px;background:var(--accent);color:white;padding:10px 14px;font:inherit;cursor:pointer}
+button.secondary{background:#e9edf5;color:#172033}button:focus-visible{outline:3px solid #f5b942}
+.output{background:#0b1220;color:#d6f5df;border-radius:12px;padding:12px;min-height:44px;white-space:pre-wrap;direction:ltr;text-align:left}
+.quiz{border-top:1px solid var(--line);margin-top:18px;padding-top:12px}.quiz label{display:block;padding:6px 0;cursor:pointer}
+.feedback{font-weight:700;margin-top:8px}.muted{color:var(--muted);font-size:.94rem}.tag{display:inline-block;background:#e8edff;color:#2746bb;padding:2px 9px;border-radius:999px;font-size:.82rem}
+footer{text-align:center;color:var(--muted);padding:20px}
+.editor-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:12px}
+.editor-overlay[hidden]{display:none!important}
+.editor-panel{background:var(--card);border:1px solid var(--line);border-radius:16px;width:min(920px,100%);max-height:92vh;overflow:auto;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.editor-panel h2{margin:0 0 8px;font-size:1.2rem}
+.editor-panel textarea{width:100%;min-height:220px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--code);color:#e6edf7;font:14px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;direction:ltr;text-align:left;resize:vertical}
+.editor-panel .output{margin-top:10px;min-height:60px}
+.editor-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+body.dark #openEditor,body.dark #themeToggle{background:#26365d!important;color:#fff!important}
+/* Syntax highlighting - VS Code Dark+ inspired */
+.hl-pre,.code-hl{direction:ltr;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere;background:#1e1e1e;color:#d4d4d4;border-radius:12px;padding:14px;font-size:.92rem;overflow:auto;font-family:ui-monospace,SFMono-Regular,Consolas,"Courier New",monospace;line-height:1.55}
+.tok-kw{color:#569cd6;font-weight:600}
+.tok-str{color:#ce9178}
+.tok-num{color:#b5cea8}
+.tok-cm{color:#6a9955;font-style:italic}
+.tok-fn{color:#dcdcaa}
+.tok-op{color:#d4d4d4}
+.tok-punc{color:#d4d4d4}
+.tok-bool{color:#569cd6}
+.tok-null{color:#569cd6}
+.tok-tag{color:#569cd6}
+.tok-attr{color:#9cdcfe}
+.tok-prop{color:#9cdcfe}
+.tok-sel{color:#d7ba7d}
+.editor-wrap{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#1e1e1e}
+.editor-wrap .hl-layer{position:absolute;inset:0;padding:12px;margin:0;pointer-events:none;overflow:auto;color:#d4d4d4;font:14px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;word-wrap:break-word;direction:ltr;text-align:left}
+.editor-wrap textarea.hl-input{position:relative;z-index:1;width:100%;min-height:220px;padding:12px;border:0;background:transparent;color:transparent;caret-color:#fff;font:14px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;resize:vertical;direction:ltr;text-align:left;outline:none}
+.editor-wrap textarea.hl-input::selection{background:rgba(86,156,214,.35)}
+.editor-wrap textarea.hl-input::-moz-selection{background:rgba(86,156,214,.35)}
+body.dark pre code,.lesson pre{background:#1e1e1e}
+
+/* ===== إضافات ===== */
+button.hbtn{background:#fff;color:#20336d}
+body.dark button.hbtn{background:#26365d;color:#fff}
+button:disabled{opacity:.55;cursor:not-allowed}
+#content:focus{outline:none}
+.lesson-lock.ok{background:var(--card);color:var(--good);border-color:var(--line)}
+body.dark .lesson-lock.ok{background:var(--card);color:var(--good);border-color:var(--line)}
+.pv{width:100%;height:200px;border:1px solid var(--line);border-radius:12px;background:#fff}
+select{font:inherit;padding:9px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text)}
+#resetProgress{color:var(--bad)}
+.editor-wrap .hl-layer{overflow:hidden;overflow-wrap:break-word;word-break:normal;tab-size:2;background:transparent;border-radius:0}
+.editor-wrap textarea.hl-input{display:block;margin:0;border:0;overflow:hidden;resize:none;overflow-wrap:break-word;word-break:normal;tab-size:2}
+#storageWarn[hidden]{display:none}
+
+.progress-dash{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:16px}
+.progress-dash h3{margin:0 0 10px;font-size:1.05rem}
+.progress-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:600px){.progress-stats{grid-template-columns:1fr}}
+.stat-card{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.stat-card .num{font-size:1.45rem;font-weight:800;color:var(--accent);display:block;line-height:1.2}
+.stat-card .lbl{font-size:.82rem;color:var(--muted)}
+.progress-track{height:10px;background:var(--line);border-radius:999px;overflow:hidden;margin-top:12px}
+.progress-track>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#4263eb,#7c96ff);border-radius:999px;transition:width .35s ease}
+.exam-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.exam-chip{font-size:.78rem;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.exam-chip.done{background:#e8fff3;color:var(--good);border-color:#b6e6c8;font-weight:700}
+body.dark .exam-chip.done{background:#1a3328;color:var(--good);border-color:#2d5a45}
+.editor-wrap textarea.hl-input{color:transparent!important;-webkit-text-fill-color:transparent!important;caret-color:#fff!important}
+.editor-wrap textarea.hl-input::placeholder{opacity:0}
+
+</style>
+</head>
+<body>
+<header><div class="wrap"><div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h1>ساهر | دليل JavaScript التفاعلي</h1><p>شرح عربي وأكواد جاهزة وتدريبات — مناسب للموبايل</p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+<button id="openEditor" class="secondary hbtn">⌨️ محرر الأكواد</button>
+<button id="openProgress" class="secondary hbtn">💾 تقدّمي</button>
+<button id="themeToggle" class="secondary hbtn">🌙 وضع الليل</button>
+</div></div></div></header>
+<div id="progressBar" style="height:6px;background:var(--line);position:sticky;top:0;z-index:99">
+  <div id="progressFill" style="height:100%;width:0;background:var(--accent);transition:width .3s"></div>
+</div>
+<main>
+<div class="progress-dash" id="progressDash" aria-label="لوحة التقدم">
+  <h3>📊 لوحة التقدم</h3>
+  <div class="progress-stats">
+    <div class="stat-card"><span class="num" id="statPercent">0%</span><span class="lbl">نسبة الإنجاز</span></div>
+    <div class="stat-card"><span class="num" id="statLessons">0 / 0</span><span class="lbl">الدروس المكتملة</span></div>
+    <div class="stat-card"><span class="num" id="statExams">0 / 0</span><span class="lbl">الامتحانات المجتازة</span></div>
+  </div>
+  <div class="progress-track"><span id="dashFill"></span></div>
+  <div class="exam-chips" id="examChips"></div>
+</div>
+<div class="notice" id="storageWarn" hidden>⚠️ المتصفح يمنع حفظ التقدم (ربما بسبب التصفح الخاص). افتح «💾 تقدّمي» وصدّر نسخة احتياطية حتى لا يضيع تقدمك.</div>
+<div class="layout">
+<nav><div class="navhead"><h2 id="navTitle">الدرس الأول</h2><button id="toggleMenu" class="secondary" aria-expanded="false" aria-controls="menu">☰ الدروس</button></div><div id="menu" hidden></div><p class="muted" id="navHint">حل سؤال الدرس واكتب الكود لفتح الدرس التالي.</p><p class="muted" id="statsLine"></p></nav>
+<section class="panel" id="content" aria-live="polite"></section>
+</div>
+</main>
+
+<div id="editorOverlay" class="editor-overlay" hidden>
+  <div class="editor-panel" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+    <div class="editor-head">
+      <h2 id="editorTitle">⌨️ محرر JavaScript</h2>
+      <button id="closeEditor" class="secondary">✕ إغلاق</button>
+    </div>
+    <p class="muted" style="margin-top:0">اكتب أي كود JavaScript وجرّبه مباشرة. الناتج يظهر بالأسفل.</p>
+    <div class="editor-wrap">
+      <pre class="hl-layer" id="playgroundHl" aria-hidden="true"></pre>
+      <textarea id="playgroundCode" class="hl-input" spellcheck="false" placeholder="// اكتب كودك هنا...
+console.log('أهلًا يا ساهر');
+console.log(2 + 3);"></textarea>
+    </div>
+    <div class="actions" style="margin-top:10px">
+      <button id="runPlayground">▶ تشغيل</button>
+      <button class="secondary" id="clearPlayground">مسح</button>
+      <button class="secondary" id="loadLessonCode">تحميل كود الدرس الحالي</button>
+      <select id="examplePick" aria-label="أمثلة جاهزة">
+        <option value="">أمثلة جاهزة…</option>
+        <option value="loop">حلقة for</option>
+        <option value="fn">دالة</option>
+        <option value="arr">مصفوفة</option>
+        <option value="obj">كائن ومتوسط</option>
+        <option value="timer">مؤقت</option>
+      </select>
+    </div>
+    <div class="output" id="playgroundOutput">اضغط «تشغيل» لعرض الناتج هنا.</div>
+  </div>
+</div>
+<div id="progressOverlay" class="editor-overlay" hidden>
+  <div class="editor-panel" role="dialog" aria-modal="true" aria-labelledby="progTitle">
+    <div class="editor-head">
+      <h2 id="progTitle">💾 تقدّمي</h2>
+      <button id="closeProgress" class="secondary">✕ إغلاق</button>
+    </div>
+    <div id="progStats" class="output" style="direction:rtl;text-align:right"></div>
+    <p class="muted">يُحفظ تقدمك تلقائيًا في هذا المتصفح: الدروس المنجزة والامتحانات والكود الذي كتبته ومكانك الأخير. إذا مسحت بيانات الموقع أو غيّرت المتصفح أو الجهاز فسيضيع، لذلك صدّر نسخة احتياطية من وقت لآخر.</p>
+    <div class="actions">
+      <button id="exportProgress">⬇️ تصدير التقدم</button>
+      <button class="secondary" id="importProgressBtn">⬆️ استيراد تقدم</button>
+      <button class="secondary" id="resetProgress">🗑️ إعادة ضبط</button>
+    </div>
+    <input type="file" id="importFile" accept="application/json,.json" hidden>
+    <div class="feedback" id="progMsg" role="status"></div>
+  </div>
+</div>
+<footer><p class="muted" style="max-width:720px;margin:0 auto 10px"><b>تنبيه:</b> هذا دليل تعليمي من إعدادنا يغطي مفاهيم شائعة في JavaScript مرتبطة بتعلّم البرمجة. ليس نسخة من منصة QUREO ولا ضمانًا بأنه يطابق كل دروسها أو ترتيبها الرسمي.</p>اتدرّب على فهم الكود وتتبع الناتج، وليس حفظه فقط.<br><b>للتواصل:</b> <a href="tel:01024897145" style="color:inherit">01024897145</a></footer>
+<script>
+const lessons = [
+{title:"1. ما هي البرمجة؟",tag:"مقدمة",desc:"البرمجة هي كتابة أوامر مرتبة يفهمها الحاسوب لحل مشكلة. JavaScript لغة تعمل داخل المتصفح وتتحكم في الصفحات والتفاعل.",ex:"console.log('أهلًا يا ساهر');\nconsole.log(2 + 3);\nconsole.log('مرحبا بالبرمجة');",explain:"console.log تطبع قيمة في وحدة الإخراج. السطر الأول رسالة نصية، والثاني ناتج الجمع 5.",run:"console.log('أهلًا يا ساهر');\nconsole.log(2 + 3);\nconsole.log('مرحبا بالبرمجة');",q:"ما ناتج 4 + 6؟",opts:["46", "10", "خطأ"],correct:1,why:"علامة + تجمع الأعداد؛ الناتج 10."},
+{title:"2. المتغيرات let و const",tag:"Variables",desc:"المتغير اسم نخزن فيه قيمة. استخدم let عندما تتوقع تغيير القيمة، وconst عندما لن تعيد إسناد المتغير.",ex:"let score = 10;\nscore = score + 5;\nconsole.log(score);\n\nconst student = 'ساهر';\nconsole.log(student);",explain:"بدأ score بـ 10 ثم أصبح 15. لا يمكن إعادة إسناد const.",run:"let score = 10;\nscore = score + 5;\nconsole.log(score);\nconst student = 'ساهر';\nconsole.log(student);",q:"أي كلمة مناسبة لمتغير ستتغير قيمته؟",opts:["let", "const", "console"],correct:0,why:"let تسمح بإسناد قيمة جديدة."},
+{title:"3. أنواع البيانات",tag:"Types",desc:"الأنواع الأساسية: Number و String و Boolean و null و undefined. typeof يساعد على معرفة النوع.",ex:"let age = 16;\nlet name = 'Ali';\nlet passed = true;\nlet code = '25';\nconsole.log(typeof age);\nconsole.log(typeof name);\nconsole.log(typeof passed);\nconsole.log(typeof code);",explain:"المتغير code يحمل '25' بين علامتي اقتباس، لذلك نوعه string رغم أنه يشبه رقمًا.",run:"let age = 16;\nlet name = 'Ali';\nlet passed = true;\nlet code = '25';\nconsole.log(typeof age);\nconsole.log(typeof name);\nconsole.log(typeof passed);\nconsole.log(typeof code);",q:"ما نوع القيمة '25' بين علامتي اقتباس؟",opts:["Number", "String", "Boolean"],correct:1,why:"علامات الاقتباس تجعلها String."},
+{title:"4. العمليات والمقارنة",tag:"Operators",desc:"+ - * / % للعمليات. === مقارنة صارمة (قيمة ونوع). فضّل === على ==.",ex:"console.log(8 + 2);\nconsole.log(8 * 2);\nconsole.log(10 % 3);\nconsole.log(5 > 3);\nconsole.log(5 === '5');",explain:"% باقي القسمة. 5 === '5' تكون false لأن الأنواع مختلفة.",run:"console.log(8 + 2);\nconsole.log(8 * 2);\nconsole.log(10 % 3);\nconsole.log(5 > 3);\nconsole.log(5 === '5');",q:"ما ناتج 7 > 9؟",opts:["true", "false", "16"],correct:1,why:"7 ليست أكبر من 9."},
+{title:"5. الشروط if / else",tag:"Conditions",desc:"الشروط تختار مسار التنفيذ. الشرط بين () والجسم بين {}.",ex:"let mark = 75;\nif (mark >= 50) {\n  console.log('ناجح');\n} else {\n  console.log('حاول مرة أخرى');\n}",explain:"إذا تحقق الشرط يُنفَّذ if وإلا else.",run:"let mark = 75;\nif (mark >= 50) {\n  console.log('ناجح');\n} else {\n  console.log('حاول مرة أخرى');\n}",q:"إذا كانت mark = 40، أي رسالة تظهر؟",opts:["ناجح", "حاول مرة أخرى", "لا شيء"],correct:1,why:"40 أقل من 50."},
+{title:"6. else if المتعددة",tag:"Else if",desc:"عند أكثر من حالة استخدم else if بالترتيب من الأخص إلى الأعم.",ex:"let mark = 82;\nif (mark >= 85) {\n  console.log('ممتاز');\n} else if (mark >= 70) {\n  console.log('جيد جدًا');\n} else {\n  console.log('استمر');\n}",explain:"تُفحص بالترتيب ويتوقف عند أول شرط صحيح.",run:"let mark = 82;\nif (mark >= 85) {\n  console.log('ممتاز');\n} else if (mark >= 70) {\n  console.log('جيد جدًا');\n} else {\n  console.log('استمر');\n}",q:"ما ناتج المثال إذا mark = 90؟",opts:["ممتاز", "جيد جدًا", "استمر"],correct:0,why:"90 تحقق الشرط الأول."},
+{title:"7. العوامل المنطقية",tag:"Logic",desc:"&& يحتاج الطرفين. || يكفي أحدهما. ! يعكس القيمة.",ex:"let age = 16;\nlet hasCard = true;\nconsole.log(age >= 15 && hasCard);\nconsole.log(age < 12 || hasCard);\nconsole.log(!hasCard);",explain:"الأول true لأن الشرطين صحيحان.",run:"let age = 16;\nlet hasCard = true;\nconsole.log(age >= 15 && hasCard);\nconsole.log(age < 12 || hasCard);\nconsole.log(!hasCard);",q:"متى تكون A && B صحيحة؟",opts:["أحدهما فقط", "الاثنان صحيحان", "الاثنان خطأ"],correct:1,why:"AND تحتاج الطرفين."},
+{title:"8. التكرار while",tag:"Loops",desc:"while تكرر ما دام الشرط صحيحًا. غيّر متغير الحلقة حتى لا تصبح لا نهائية.",ex:"let i = 1;\nwhile (i <= 3) {\n  console.log(i);\n  i++;\n}",explain:"تطبع 1 و2 و3 ثم تتوقف.",run:"let i = 1;\nwhile (i <= 3) {\n  console.log(i);\n  i++;\n}",q:"كم مرة تعمل الحلقة؟",opts:["مرتان", "3 مرات", "4 مرات"],correct:1,why:"i = 1 و2 و3."},
+{title:"9. التكرار for",tag:"For",desc:"for(بداية; شرط; تحديث) عندما تعرف عدد التكرارات تقريبًا.",ex:"for (let i = 0; i < 4; i++) {\n  console.log(i);\n}",explain:"تطبع 0 و1 و2 و3.",run:"for (let i = 0; i < 4; i++) {\n  console.log(i);\n}",q:"ما آخر رقم يطبعه المثال؟",opts:["2", "3", "4"],correct:1,why:"عند i=4 يتوقف الشرط."},
+{title:"10. الدوال Functions",tag:"Functions",desc:"الدالة كتلة أوامر باسم. المعاملات مدخلات وreturn تُرجع نتيجة.",ex:"function add(a, b) {\n  return a + b;\n}\nconsole.log(add(3, 4));",explain:"بدون return النتيجة undefined.",run:"function add(a, b) {\n  return a + b;\n}\nconsole.log(add(3, 4));",q:"ما وظيفة return؟",opts:["إنشاء حلقة", "إرجاع قيمة من الدالة", "طباعة الصفحة"],correct:1,why:"return تعيد قيمة."},
+{title:"11. المصفوفات Arrays",tag:"Arrays",desc:"قائمة قيم مفهرسة من 0. length للطول و push للإضافة.",ex:"let fruits = ['تفاح', 'موز', 'عنب'];\nconsole.log(fruits[0]);\nconsole.log(fruits.length);\nfruits.push('برتقال');\nconsole.log(fruits);",explain:"العنصر الأخير: length - 1.",run:"let fruits = ['تفاح', 'موز', 'عنب'];\nconsole.log(fruits[0]);\nconsole.log(fruits.length);\nfruits.push('برتقال');\nconsole.log(fruits);",q:"ما فهرس العنصر الثاني؟",opts:["0", "1", "2"],correct:1,why:"الفهرسة من صفر."},
+{title:"12. for...of",tag:"Iterate",desc:"for...of تمر على قيم المصفوفة واحدة تلو الأخرى.",ex:"let scores = [10, 20, 30];\nfor (const score of scores) {\n  console.log(score);\n}",explain:"ثلاث قيم: 10 ثم 20 ثم 30.",run:"let scores = [10, 20, 30];\nfor (const score of scores) {\n  console.log(score);\n}",q:"كم قيمة تُطبع؟",opts:["1", "2", "3"],correct:2,why:"ثلاثة عناصر."},
+{title:"13. النصوص Strings",tag:"Strings",desc:"اجمع بـ + أو القوالب النصية. length من أهم الخصائص.",ex:"let first = 'Saher';\nlet greeting = 'Hello ' + first;\nconsole.log(greeting);\nconsole.log(first.length);\nconsole.log(`مرحبا ${first}`);",explain:"القالب النصي يدمج المتغيرات بـ ${}.",run:"let first = 'Saher';\nlet greeting = 'Hello ' + first;\nconsole.log(greeting);\nconsole.log(first.length);\nconsole.log(`مرحبا ${first}`);",q:"ما ناتج 'Hi ' + 'Saher'؟",opts:["Hi Saher", "Hi + Saher", "خطأ"],correct:0,why:"+ يصل النصين."},
+{title:"14. الكائنات Objects",tag:"Objects",desc:"خصائص مفتاح:قيمة. الوصول بـ . أو [].",ex:"const player = {\n  name: 'Saher',\n  score: 12\n};\nconsole.log(player.name);\nconsole.log(player.score);",explain:"مع const يمكن تعديل الخصائص.",run:"const player = {\n  name: 'Saher',\n  score: 12\n};\nconsole.log(player.name);\nconsole.log(player.score);",q:"كيف نصل إلى score؟",opts:["player->score", "player.score", "score.player"],correct:1,why:"النقطة هي الأسلوب المعتاد."},
+{title:"15. التعليقات",tag:"Debugging",desc:"// تعليق سطر. /* */ لعدة أسطر. اقرأ رسالة الخطأ ورقم السطر.",ex:"// حساب المجموع\nlet total = 4 + 6;\nconsole.log(total);",explain:"التعليقات لا تُنفَّذ.",run:"// حساب المجموع\nlet total = 4 + 6;\nconsole.log(total);",q:"هل يُنفَّذ سطر يبدأ بـ //؟",opts:["نعم", "لا، إنه تعليق", "فقط في الحلقات"],correct:1,why:"التعليق يُتجاهل."},
+{title:"16. بنية HTML",tag:"HTML",desc:"HTML تبني الهيكل: DOCTYPE ثم html و head و body. head للوصفي و body للمحتوى الظاهر.",ex:"console.log('HTML = هيكل الصفحة');\nconsole.log('head = title + meta + CSS');\nconsole.log('body = المحتوى الظاهر');",explain:"المتصفح يبني شجرة DOM من HTML.",run:"console.log('HTML = هيكل الصفحة');\nconsole.log('head = title + meta + CSS');\nconsole.log('body = المحتوى الظاهر');",q:"أين المحتوى الظاهر؟",opts:["داخل body", "داخل head فقط", "داخل DOCTYPE"],correct:0,why:"body للمحتوى الظاهر."},
+{title:"17. العناوين والروابط",tag:"HTML Text",desc:"h1–h6 عناوين، p فقرات، a روابط مع href.",ex:"console.log('<h1>عنوان رئيسي</h1>');\nconsole.log('<p>فقرة</p>');\nconsole.log('<a href=\"https://example.com\">رابط</a>');",explain:"لا تستخدم العناوين لمجرد تكبير الخط فقط.",run:"console.log('<h1>عنوان رئيسي</h1>');\nconsole.log('<p>فقرة</p>');\nconsole.log('<a href=\"https://example.com\">رابط</a>');",q:"أكبر عنوان عادة؟",opts:["h6", "h1", "p"],correct:1,why:"h1 أعلى مستوى."},
+{title:"18. الصور والقوائم",tag:"HTML Media",desc:"img مع src و alt. ul/ol مع li. alt مهم للوصولية.",ex:"console.log('<img src=\"photo.jpg\" alt=\"وصف\">');\nconsole.log('<ul><li>عنصر</li></ul>');",explain:"بدون alt تفقد الصورة معناها لقارئات الشاشة.",run:"console.log('<img src=\"photo.jpg\" alt=\"وصف\">');\nconsole.log('<ul><li>عنصر</li></ul>');",q:"أهمية alt؟",opts:["تلوين الصورة", "نص بديل للوصولية", "حذف الصورة"],correct:1,why:"alt يصف الصورة."},
+{title:"19. النماذج Forms",tag:"HTML Forms",desc:"form يجمع الحقول. input و label و button.",ex:"console.log('<form>');\nconsole.log('  <label>الاسم: <input type=\"text\"></label>');\nconsole.log('  <button type=\"submit\">إرسال</button>');\nconsole.log('</form>');",explain:"اربط label بالحقل. JS يقرأ value.",run:"console.log('<form>');\nconsole.log('  <label>الاسم: <input type=\"text\"></label>');\nconsole.log('  <button type=\"submit\">إرسال</button>');\nconsole.log('</form>');",q:"وسم يجمع الحقول؟",opts:["form", "img", "h1"],correct:0,why:"form حاوية النموذج."},
+{title:"20. id و class",tag:"HTML Structure",desc:"id فريد. class قابل للتكرار. header و nav و main و footer دلالية.",ex:"console.log('<header id=\"top\"></header>');\nconsole.log('<nav class=\"menu\"></nav>');\nconsole.log('<main></main>');",explain:"CSS: #id و .class. لا تكرر id.",run:"console.log('<header id=\"top\"></header>');\nconsole.log('<nav class=\"menu\"></nav>');\nconsole.log('<main></main>');",q:"ما يجب أن يكون فريدًا؟",opts:["class", "id", "كلاهما يتكرر"],correct:1,why:"id فريد."},
+{title:"21. مقدمة CSS",tag:"CSS Intro",desc:"CSS تنسّق المظهر. القاعدة: محدد { خاصية: قيمة; }.",ex:"console.log('h1 { color: #4263eb; font-size: 24px; }');\nconsole.log('p { line-height: 1.6; }');",explain:"فصل الشكل عن المحتوى يسهّل الصيانة.",run:"console.log('h1 { color: #4263eb; font-size: 24px; }');\nconsole.log('p { line-height: 1.6; }');",q:"لغة تنسيق الألوان؟",opts:["CSS", "JavaScript فقط", "console.log"],correct:0,why:"CSS للمظهر."},
+{title:"22. المحددات",tag:"CSS Selectors",desc:"الوسم و .class و #id و :hover.",ex:"console.log('p { color: #4263eb; }');\nconsole.log('.card { background: #f4f7fb; }');\nconsole.log('button:hover { opacity: 0.9; }');",explain:"خصوصية id أعلى من class.",run:"console.log('p { color: #4263eb; }');\nconsole.log('.card { background: #f4f7fb; }');\nconsole.log('button:hover { opacity: 0.9; }');",q:"استهداف class اسمه card؟",opts:["#card", ".card", "card:"],correct:1,why:"النقطة قبل class."},
+{title:"23. نموذج الصندوق",tag:"Box Model",desc:"content + padding + border + margin. استخدم border-box.",ex:"console.log('.box {');\nconsole.log('  width: 200px;');\nconsole.log('  padding: 16px;');\nconsole.log('  border: 2px solid #333;');\nconsole.log('  box-sizing: border-box;');\nconsole.log('}');",explain:"padding داخلي و margin خارجي.",run:"console.log('.box {');\nconsole.log('  width: 200px;');\nconsole.log('  padding: 16px;');\nconsole.log('  border: 2px solid #333;');\nconsole.log('  box-sizing: border-box;');\nconsole.log('}');",q:"ماذا يفعل padding؟",opts:["مسافة داخلية", "يحذف العنصر", "يغيّر اللغة"],correct:0,why:"حشوة داخلية."},
+{title:"24. Flexbox",tag:"Flexbox",desc:"تخطيط محاذاة وتوزيع. display:flex على الحاوية.",ex:"console.log('.row {');\nconsole.log('  display: flex;');\nconsole.log('  justify-content: space-between;');\nconsole.log('  align-items: center;');\nconsole.log('  gap: 12px;');\nconsole.log('}');",explain:"justify على المحور الرئيسي.",run:"console.log('.row {');\nconsole.log('  display: flex;');\nconsole.log('  justify-content: space-between;');\nconsole.log('  align-items: center;');\nconsole.log('  gap: 12px;');\nconsole.log('}');",q:"ما يفعّل Flexbox؟",opts:["display: flex", "position: flex", "float: flex"],correct:0,why:"display: flex."},
+{title:"25. Grid والتجاوب",tag:"Grid",desc:"Grid تخطيط شبكي. Media queries تكيّف مع الشاشة.",ex:"console.log('.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }');\nconsole.log('@media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }');",explain:"على الموبايل عمود واحد أوضح.",run:"console.log('.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }');\nconsole.log('@media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }');",q:"وظيفة media query؟",opts:["أنماط حسب عرض الشاشة", "حذف JS", "قاعدة بيانات"],correct:0,why:"أنماط مشروطة."},
+{title:"26. الأحداث Events",tag:"Events",desc:"click و input. addEventListener تربط العنصر بدالة.",ex:"console.log(\"document.querySelector('#btn').addEventListener('click', () => {\");\nconsole.log(\"  console.log('تم الضغط');\");\nconsole.log('});');",explain:"الأسلوب الموصى به للمشاريع.",run:"console.log('الأحداث تجعل الصفحة تستجيب للمستخدم.');",q:"متى يعمل click؟",opts:["عند الضغط على العنصر", "عند إغلاق الجهاز", "عند التعليق"],correct:0,why:"نقرة على العنصر."},
+{title:"27. DOM",tag:"DOM",desc:"querySelector للاختيار. textContent للنص الآمن. classList للفئات.",ex:"console.log(\"const el = document.querySelector('#message');\");\nconsole.log(\"el.textContent = 'تم التغيير';\");",explain:"تجنّب innerHTML مع نص مستخدم غير مصفّى.",run:"console.log('DOM يسمح بتغيير عناصر الصفحة.');",q:"وظيفة textContent؟",opts:["تغيير النص داخل العنصر", "قاعدة بيانات", "حلقة"],correct:0,why:"للنص داخل العنصر."},
+{title:"28. إدخال المستخدم",tag:"Input",desc:"اقرأ .value. استمع لـ input أو change.",ex:"console.log(\"const input = document.querySelector('#name');\");\nconsole.log('console.log(input.value);');",explain:"تحقق من القيم قبل استخدامها.",run:"console.log('قيمة الحقل عبر العنصر.value');",q:"خاصية نص input؟",opts:["input.value", "input.length فقط", "input.click"],correct:0,why:"value قيمة الحقل."},
+{title:"29. الدوال السهمية",tag:"Modern JS",desc:"Arrow functions مختصرة. قيم افتراضية للمعاملات.",ex:"const double = (n) => n * 2;\nconsole.log(double(6));\nfunction greet(name = 'صديق') {\n  return 'أهلًا ' + name;\n}\nconsole.log(greet());\nconsole.log(greet('ساهر'));",explain:"السهمية لا تملك this خاصًا كالدالة العادية.",run:"const double = (n) => n * 2;\nconsole.log(double(6));\nfunction greet(name = 'صديق') {\n  return 'أهلًا ' + name;\n}\nconsole.log(greet());\nconsole.log(greet('ساهر'));",q:"ناتج double(6)؟",opts:["8", "12", "36"],correct:1,why:"6×2=12"},
+{title:"30. النطاق Scope",tag:"Scope",desc:"أين يُرى المتغير. let/const نطاق كتلة.",ex:"let school = 'مدرستي';\nfunction showSchool() {\n  let room = 'الفصل';\n  console.log(school);\n  console.log(room);\n}\nshowSchool();",explain:"room غير مرئي خارج الدالة.",run:"let school = 'مدرستي';\nfunction showSchool() {\n  let room = 'الفصل';\n  console.log(school);\n  console.log(room);\n}\nshowSchool();",q:"أين room؟",opts:["داخل الدالة", "من كل مكان", "لا يمكن أبدًا"],correct:0,why:"نطاق محلي."},
+{title:"31. map و filter",tag:"Array Methods",desc:"map تحوّل. filter تصفّي. لا تعدّل الأصل.",ex:"const nums = [1, 2, 3, 8, 11];\nconsole.log(nums.map(n => n * 2));\nconsole.log(nums.filter(n => n > 5));",explain:"أساليب أوضح من حلقات طويلة.",run:"const nums = [1, 2, 3, 8, 11];\nconsole.log(nums.map(n => n * 2));\nconsole.log(nums.filter(n => n > 5));",q:"نتيجة filter لـ n>5؟",opts:["[1,2,3]", "[8,11]", "8 فقط"],correct:1,why:"مصفوفة بالعناصر المحققة."},
+{title:"32. Math والعشوائية",tag:"Math",desc:"Math.random من 0 إلى أقل من 1. floor للتقريب لأسفل.",ex:"const dice = Math.floor(Math.random() * 6) + 1;\nconsole.log(dice);\nconsole.log(Math.max(3, 9, 2));",explain:"الصيغة تعطي 1 إلى 6. ناتج السطر الأول يتغير في كل تشغيل لأنه عشوائي، أما Math.max فتعطي 9 دائمًا.",nd:true,must:["Math.random","Math.floor","Math.max"],fixedLast:"9",run:"const dice = Math.floor(Math.random() * 6) + 1;\nconsole.log(dice);\nconsole.log(Math.max(3, 9, 2));",q:"مجال dice؟",opts:["0 إلى 5", "1 إلى 6", "1 إلى 7"],correct:1,why:"1..6"},
+{title:"33. try / catch",tag:"Errors",desc:"التقط أخطاء التشغيل وعالجها برسالة واضحة.",ex:"try {\n  JSON.parse('{bad json}');\n} catch (error) {\n  console.log('حدث خطأ');\n  console.log(error.message);\n}",explain:"لا تبتلع الأخطاء دون فهمها.",run:"try {\n  JSON.parse('{bad json}');\n} catch (error) {\n  console.log('حدث خطأ');\n  console.log(error.message);\n}",q:"متى catch؟",opts:["بدون خطأ", "عند خطأ في try", "قبل try"],correct:1,why:"عند استثناء."},
+{title:"34. JSON",tag:"JSON",desc:"stringify و parse لتبادل البيانات.",ex:"const student = {name: 'Saher', mark: 90};\nconst text = JSON.stringify(student);\nconsole.log(text);\nconsole.log(JSON.parse(text).mark);",explain:"JSON لا يحفظ الدوال.",run:"const student = {name: 'Saher', mark: 90};\nconst text = JSON.stringify(student);\nconsole.log(text);\nconsole.log(JSON.parse(text).mark);",q:"وظيفة JSON.parse؟",opts:["تحويل نص JSON لقيمة", "تلوين الصفحة", "حلقة"],correct:0,why:"تحليل JSON."},
+{title:"35. localStorage",tag:"Storage",desc:"تخزين نصي في المتصفح يستمر بعد الإغلاق. ليس للأسرار.",ex:"localStorage.setItem('nickname', 'Saher');\nconsole.log(localStorage.getItem('nickname'));",explain:"للكائنات استخدم JSON.stringify/parse.",run:"localStorage.setItem(\'nickname\', \'Saher\');\nconsole.log(localStorage.getItem(\'nickname\'));",q:"وظيفة getItem؟",opts:["حفظ فقط", "قراءة قيمة مخزنة", "حذف المتصفح"],correct:1,why:"قراءة بالمفتاح."},
+{title:"36. createElement",tag:"DOM Create",desc:"أنشئ عناصر ديناميكيًا ثم أضفها للصفحة.",ex:"console.log(\"const li = document.createElement('li');\");\nconsole.log(\"li.textContent = 'جديد';\");\nconsole.log('document.body.appendChild(li);');",explain:"أساس القوائم المبنية من بيانات.",run:"console.log('createElement ينشئ عنصرًا ثم يُضاف للصفحة');",q:"دالة إنشاء عنصر؟",opts:["createElement", "querySelector", "parseInt"],correct:0,why:"createElement."},
+{title:"37. المؤقتات",tag:"Timers",desc:"setTimeout مرة بعد تأخير. setInterval تكرار.",ex:"console.log('setTimeout(() => console.log(\"بعد ثانية\"), 1000);');",explain:"الوقت بالميلي ثانية.",run:"console.log(\'بدأ العد\');\nsetTimeout(() => console.log(\'بعد ثانية\'), 1000);",q:"وظيفة setTimeout؟",opts:["تشغيل بعد تأخير", "حذف ملف", "تغيير HTML"],correct:0,why:"تأخير مرة."},
+{title:"38. fetch وAPI",tag:"Fetch",desc:"fetch تطلب بيانات عبر الشبكة وتُرجع Promise.",ex:"console.log(\"fetch('/data.json').then(r => r.json()).then(d => console.log(d));\");",explain:"عالج الأخطاء بـ catch.",run:"const p = Promise.resolve(\'وصلت البيانات\');\nconsole.log(typeof p);\np.then(v => console.log(v));",q:"ماذا تُرجع fetch؟",opts:["Promise", "رقم فقط", "CSS"],correct:0,why:"Promise."},
+{title:"39. async / await",tag:"Async",desc:"async/await تبسّط التعامل مع الـ Promise.",ex:"console.log('async function load() {');\nconsole.log(\"  const res = await fetch('/data.json');\");\nconsole.log('  const data = await res.json();');\nconsole.log('}');",explain:"await داخل دالة async.",run:"async function load() {\n  const data = await Promise.resolve({ok: true});\n  console.log(data.ok);\n}\nload();\nconsole.log(\'بدأ التحميل\');",q:"أين await؟",opts:["داخل async", "داخل CSS", "بدل DOCTYPE"],correct:0,why:"داخل async."},
+{title:"40. حل المشكلات",tag:"Algorithms",desc:"افهم المدخلات والمخرجات، قسّم لخطوات، اختبر الحالات الحدية.",ex:"let a = 12, b = 9;\nconsole.log(a > b ? a : b);\nconst arr = [1, 2, 3, 4];\nlet sum = 0;\nfor (const n of arr) sum += n;\nconsole.log(sum);",explain:"المعامل الثلاثي مختصر لـ if بسيط.",run:"let a = 12, b = 9;\nconsole.log(a > b ? a : b);\nconst arr = [1, 2, 3, 4];\nlet sum = 0;\nfor (const n of arr) sum += n;\nconsole.log(sum);",q:"أول خطوة جيدة؟",opts:["كود عشوائي", "فهم المطلوب", "حذف المتغيرات"],correct:1,why:"فهم المشكلة."},
+{title:"41. التفكيك",tag:"Destructuring",desc:"استخرج من الكائنات والمصفوفات. القوالب تدمج المتغيرات.",ex:"const user = {name: 'Saher', age: 16};\nconst {name, age} = user;\nconsole.log(name, age);\nconsole.log(`العمر: ${age}`);",explain:"يقلل التكرار.",run:"const user = {name: 'Saher', age: 16};\nconst {name, age} = user;\nconsole.log(name, age);\nconsole.log(`العمر: ${age}`);",q:"ماذا يفعل const {name} = user؟",opts:["يستخرج name", "يحذف الكائن", "يحوّل لـ CSS"],correct:0,why:"تفكيك."},
+{title:"42. spread و rest",tag:"Spread Rest",desc:"... تنشر عناصر أو تجمع بقية المعاملات.",ex:"const b = [...[1, 2], 3];\nconsole.log(b);\nfunction sum(...nums) {\n  return nums.reduce((t, n) => t + n, 0);\n}\nconsole.log(sum(1, 2, 3));",explain:"النسخ سطحي.",run:"const b = [...[1, 2], 3];\nconsole.log(b);\nfunction sum(...nums) {\n  return nums.reduce((t, n) => t + n, 0);\n}\nconsole.log(sum(1, 2, 3));",q:"نتيجة [...[1,2], 3]؟",opts:["[1,2,3]", "[[1,2],3]", "خطأ"],correct:0,why:"النشر يفرد."},
+{title:"43. الوحدات Modules",tag:"Modules",desc:"export و import لتقسيم المشروع لملفات.",ex:"console.log('export function add(a, b) { return a + b; }');\nconsole.log(\"import { add } from './math.js';\");",explain:"في المتصفح: script type=module.",run:"console.log('الوحدات تنظم المشروع عبر export و import');",q:"كلمة التصدير؟",opts:["export", "include", "link"],correct:0,why:"export."},
+{title:"44. أفضل الممارسات",tag:"Best Practices",desc:"أسماء واضحة، دوال قصيرة، textContent بدل innerHTML للنص.",ex:"console.log('function calcTotal(price, qty) { return price * qty; }');\nconsole.log('// آمن: el.textContent = userText');",explain:"لا تخزن أسرارًا في الواجهة.",run:"console.log('اكتب كودًا واضحًا ولا تثق بمدخلات المستخدم دون فحص');",q:"الأكثر أمانًا لعرض نص مستخدم؟",opts:["textContent", "innerHTML دون تصفية", "eval"],correct:0,why:"textContent لا يفسّر HTML."},
+{title:"45. مشروع: آلة حاسبة",tag:"Project",desc:"اجمع المتغيرات والدوال والشروط في منطق قابل للربط بواجهة.",ex:"function calculate(a, op, b) {\n  if (op === '+') return a + b;\n  if (op === '-') return a - b;\n  if (op === '*') return a * b;\n  if (op === '/') return b !== 0 ? a / b : 'قسمة على صفر!';\n  return 'عملية غير معروفة';\n}\nconsole.log(calculate(10, '+', 5));\nconsole.log(calculate(10, '/', 2));\nconsole.log(calculate(10, '/', 0));",explain:"افصل المنطق عن الواجهة وعالج الحالات الخاصة.",run:"function calculate(a, op, b) {\n  if (op === '+') return a + b;\n  if (op === '-') return a - b;\n  if (op === '*') return a * b;\n  if (op === '/') return b !== 0 ? a / b : 'قسمة على صفر!';\n  return 'عملية غير معروفة';\n}\nconsole.log(calculate(10, '+', 5));\nconsole.log(calculate(10, '/', 2));\nconsole.log(calculate(10, '/', 0));",q:"ماذا يُتحقق عند القسمة؟",opts:["المقسوم عليه ليس صفرًا", "لون الزر", "حجم الشاشة"],correct:0,why:"تجنّب القسمة على صفر."},
+{title:"46. المعامل الثلاثي",tag:"Ternary",desc:"اختصار لـ if بسيط: شرط ? إن_صح : إن_خطأ.",ex:"let mark = 70;\nlet result = mark >= 50 ? 'ناجح' : 'راسب';\nconsole.log(result);\nconsole.log(10 > 5 ? 'أكبر' : 'أصغر');",explain:"مفيد للتعيين السريع دون كتلة if كاملة.",run:"let mark = 70;\nlet result = mark >= 50 ? 'ناجح' : 'راسب';\nconsole.log(result);\nconsole.log(10 > 5 ? 'أكبر' : 'أصغر');",q:"ماذا يطبع إن mark = 40؟",opts:["ناجح", "راسب", "40"],correct:1,why:"40 أقل من 50."},
+{title:"47. break و continue",tag:"Loop Control",desc:"break تخرج من الحلقة. continue تتخطى باقي الدورة الحالية.",ex:"for (let i = 1; i <= 5; i++) {\n  if (i === 3) continue;\n  if (i === 5) break;\n  console.log(i);\n}",explain:"يطبع 1 و2 و4 (تخطّي 3 والتوقف قبل 5).",run:"for (let i = 1; i <= 5; i++) {\n  if (i === 3) continue;\n  if (i === 5) break;\n  console.log(i);\n}",q:"ماذا يفعل continue؟",opts:["ينهي البرنامج", "يتخطى باقي الدورة الحالية", "يحذف المصفوفة"],correct:1,why:"continue تنتقل للتكرار التالي."},
+{title:"48. reduce و includes",tag:"Array Extra",desc:"reduce تجمع قيمة واحدة. includes تتحقق من وجود عنصر.",ex:"const nums = [1, 2, 3, 4];\nconst sum = nums.reduce((t, n) => t + n, 0);\nconsole.log(sum);\nconsole.log(nums.includes(3));\nconsole.log(nums.includes(9));",explain:"القيمة الابتدائية لـ reduce هنا 0.",run:"const nums = [1, 2, 3, 4];\nconst sum = nums.reduce((t, n) => t + n, 0);\nconsole.log(sum);\nconsole.log(nums.includes(3));\nconsole.log(nums.includes(9));",q:"ناتج sum؟",opts:["10", "24", "4"],correct:0,why:"1+2+3+4=10."},
+{title:"49. Date أساسيات",tag:"Date",desc:"كائن Date للتاريخ والوقت الحالي.",ex:"const now = new Date();\nconsole.log(now.getFullYear());\nconsole.log(now.getMonth() + 1);\nconsole.log(now.getDate());",explain:"getMonth من 0 إلى 11 لذلك نضيف 1.",run:"const now = new Date();\nconsole.log(now.getFullYear());\nconsole.log(now.getMonth() + 1);\nconsole.log(now.getDate());",q:"لماذا +1 مع getMonth؟",opts:["لأن الشهر يبدأ من 0", "خطأ دائمًا", "لحذف اليوم"],correct:0,why:"الأشهر صفرية الفهرسة."},
+{title:"50. Boolean والقيم الحقّية",tag:"Boolean",desc:"0 و '' و null و undefined قيم باطلة في الشروط.",ex:"console.log(Boolean(1));\nconsole.log(Boolean(0));\nconsole.log(Boolean(''));\nconsole.log(Boolean('نص'));\nconsole.log(Boolean(null));",explain:"مفيد عند التحقق من وجود قيمة.",run:"console.log(Boolean(1));\nconsole.log(Boolean(0));\nconsole.log(Boolean(''));\nconsole.log(Boolean('نص'));\nconsole.log(Boolean(null));",q:"Boolean(0)؟",opts:["true", "false", "0"],correct:1,why:"0 قيمة باطلة."},
+{title:"51. طرق نصية شائعة",tag:"String Methods",desc:"trim و includes و split و startsWith أدوات يومية.",ex:"const msg = '  Hello Saher  ';\nconsole.log(msg.trim());\nconsole.log(msg.includes('Saher'));\nconsole.log('a,b,c'.split(','));\nconsole.log('JavaScript'.startsWith('Java'));",explain:"trim يحذف الفراغات من الطرفين.",run:"const msg = '  Hello Saher  ';\nconsole.log(msg.trim());\nconsole.log(msg.includes('Saher'));\nconsole.log('a,b,c'.split(','));\nconsole.log('JavaScript'.startsWith('Java'));",q:"وظيفة trim؟",opts:["حذف فراغات الطرفين", "تحويل لرقم", "إنشاء حلقة"],correct:0,why:"تنظف الأطراف."},
+{title:"52. مشروع: تخمين الرقم",tag:"Project",desc:"لعبة منطقية: رقم سري ومقارنة التخمين.",ex:"const secret = 7;\nfunction guess(n) {\n  if (n === secret) return 'صحيح!';\n  if (n < secret) return 'أعلى';\n  return 'أقل';\n}\nconsole.log(guess(3));\nconsole.log(guess(9));\nconsole.log(guess(7));",explain:"يمكن ربطها لاحقًا بواجهة HTML.",run:"const secret = 7;\nfunction guess(n) {\n  if (n === secret) return 'صحيح!';\n  if (n < secret) return 'أعلى';\n  return 'أقل';\n}\nconsole.log(guess(3));\nconsole.log(guess(9));\nconsole.log(guess(7));",q:"ناتج guess(7)؟",opts:["أعلى", "أقل", "صحيح!"],correct:2,why:"يساوي السر."},
+{title:"53. مشروع: قائمة مهام",tag:"Project",desc:"مصفوفة مهام: إضافة وإكمال وعدّ المتبقي.",ex:"let todos = [];\nfunction add(title) { todos.push({title, done: false}); }\nfunction complete(i) { if (todos[i]) todos[i].done = true; }\nfunction remaining() { return todos.filter(t => !t.done).length; }\nadd('دراسة JS');\nadd('تمارين');\ncomplete(0);\nconsole.log(remaining());\nconsole.log(todos);",explain:"نواة تطبيق To-Do قبل ربطها بـ DOM.",run:"let todos = [];\nfunction add(title) { todos.push({title, done: false}); }\nfunction complete(i) { if (todos[i]) todos[i].done = true; }\nfunction remaining() { return todos.filter(t => !t.done).length; }\nadd('دراسة JS');\nadd('تمارين');\ncomplete(0);\nconsole.log(remaining());\nconsole.log(todos);",q:"كم متبقي بعد complete(0)؟",opts:["0", "1", "2"],correct:1,why:"مهمة واحدة غير مكتملة."},
+{title:"54. CSS انتقالات transition",tag:"CSS Motion",desc:"transition تنعّم تغيير الخصائص عند hover.",ex:"console.log('button {');\nconsole.log('  background: #4263eb;');\nconsole.log('  transition: background 0.2s;');\nconsole.log('}');\nconsole.log('button:hover { background: #3451c7; }');",explain:"تحدد الخاصية والمدة لانتقال سلس.",run:"console.log('button { background: #4263eb; transition: background 0.2s; }');\nconsole.log('button:hover { background: #3451c7; }');",q:"فائدة transition؟",opts:["تنعيم تغيير الخصائص", "حذف HTML", "تشغيل الصوت"],correct:0,why:"تنعيم بصري."},
+{title:"55. مراجعة ومسار التعلم",tag:"Review",desc:"مسارك: أساسيات JS → HTML → CSS → DOM → JS حديث → مشاريع.",ex:"const skills = ['متغيرات', 'شروط', 'حلقات', 'دوال', 'DOM'];\nconsole.log('تعلمت: ' + skills.join('، '));\nconsole.log('الخطوة التالية: بناء صفحة صغيرة كاملة');",explain:"ابنِ صفحة تجمع HTML+CSS+JS كتطبيق عملي.",run:"const skills = ['متغيرات', 'شروط', 'حلقات', 'دوال', 'DOM'];\nconsole.log('تعلمت: ' + skills.join('، '));\nconsole.log('الخطوة التالية: بناء صفحة صغيرة كاملة');",q:"ماذا بعد الأساسيات لصفحة ويب؟",opts:["HTML و CSS و DOM معًا", "حذف المتغيرات", "تجاهل الأخطاء"],correct:0,why:"الثلاثة معًا تصنع صفحة تفاعلية."}
+];
+
+/* ================= أسئلة إضافية للامتحانات (سؤال لكل درس) ================= */
+const extras=[
+{q:"أي أمر يطبع قيمة في وحدة الإخراج؟",opts:["console.log","print.page","write.out"],correct:0,why:"console.log تطبع القيمة."},
+{q:"ماذا يحدث عند إعادة إسناد قيمة جديدة لمتغير const؟",opts:["تتغير القيمة بهدوء","يحدث خطأ","يتحول إلى let"],correct:1,why:"const لا تقبل إعادة الإسناد."},
+{q:"ما ناتج typeof true؟",opts:["boolean","string","number"],correct:0,why:"true قيمة من نوع Boolean."},
+{q:"ما ناتج 10 % 3؟",opts:["3","1","0"],correct:1,why:"باقي قسمة 10 على 3 هو 1."},
+{q:"إذا كانت mark = 50 والشرط mark >= 50 فماذا يظهر؟",opts:["ناجح","حاول مرة أخرى","خطأ"],correct:0,why:"50 >= 50 صحيحة."},
+{q:"في سلسلة else if، متى يتوقف الفحص؟",opts:["عند أول شرط صحيح","بعد فحص كل الشروط دائمًا","عند أول شرط خاطئ"],correct:0,why:"يُنفَّذ أول شرط صحيح ثم يتوقف الفحص."},
+{q:"ما ناتج !true؟",opts:["true","false","undefined"],correct:1,why:"! تعكس القيمة المنطقية."},
+{q:"ماذا يحدث لو نسينا i++ داخل حلقة while (i <= 3)؟",opts:["تتوقف فورًا","تصبح لا نهائية","تطبع مرة واحدة"],correct:1,why:"الشرط يبقى صحيحًا دائمًا."},
+{q:"كم مرة تعمل الحلقة for (let i = 0; i < 3; i++)؟",opts:["2","3","4"],correct:1,why:"i = 0 و1 و2."},
+{q:"ما ناتج add(2, 5) إذا كانت الدالة ترجع a + b؟",opts:["7","25","undefined"],correct:0,why:"2 + 5 = 7."},
+{q:"كيف نصل إلى آخر عنصر في مصفوفة اسمها arr؟",opts:["arr[arr.length - 1]","arr[arr.length]","arr.last"],correct:0,why:"الفهرسة تبدأ من صفر فآخر عنصر فهرسه length - 1."},
+{q:"ما الذي تطبعه الحلقة for (const x of [5, 6]) console.log(x)؟",opts:["5 ثم 6","0 ثم 1","6 ثم 5"],correct:0,why:"for...of تمر على القيم بالترتيب."},
+{q:"ما قيمة 'Saher'.length؟",opts:["4","5","6"],correct:1,why:"الكلمة تتكون من 5 أحرف."},
+{q:"كيف نغيّر قيمة الخاصية score في الكائن player؟",opts:["player.score = 20","score.player = 20","player->score = 20"],correct:0,why:"نستخدم النقطة، وتعديل الخصائص مسموح حتى مع const."},
+{q:"أي رمز يبدأ تعليقًا من سطر واحد؟",opts:["//","\x3C!--","##"],correct:0,why:"// تبدأ تعليق سطر في JavaScript."},
+{q:"أي عنصر يحتوي المعلومات الوصفية مثل title؟",opts:["head","body","p"],correct:0,why:"head للوصفي وbody للمحتوى الظاهر."},
+{q:"أي وسم يُنشئ رابطًا؟",opts:["a","link-text","href"],correct:0,why:"الوسم a والخاصية href تحدد الوجهة."},
+{q:"أي وسم يُنشئ قائمة غير مرتبة؟",opts:["ol","ul","li"],correct:1,why:"ul قائمة غير مرتبة وol مرتبة."},
+{q:"أي وسم مناسب لزر الإرسال؟",opts:["button","div","span"],correct:0,why:"button مع type=\"submit\"."},
+{q:"أي رمز يستهدف id في CSS؟",opts:["#",".",":"],correct:0,why:"# للـ id والنقطة للـ class."},
+{q:"أي خاصية تغيّر لون النص في CSS؟",opts:["color","text-paint","font-ink"],correct:0,why:"الخاصية color."},
+{q:"أي محدد يستهدف الزر عند مرور الفأرة؟",opts:["button:hover","button.hover","#button"],correct:0,why:":hover حالة مرور المؤشر."},
+{q:"أي خاصية تعطي مسافة خارجية حول العنصر؟",opts:["margin","padding","border"],correct:0,why:"margin خارجي وpadding داخلي."},
+{q:"أي خاصية توزّع العناصر على المحور الرئيسي في Flexbox؟",opts:["justify-content","align-text","float"],correct:0,why:"justify-content للمحور الرئيسي."},
+{q:"ماذا تعني grid-template-columns: repeat(3, 1fr)؟",opts:["ثلاثة أعمدة متساوية","ثلاثة صفوف","عمود واحد"],correct:0,why:"تُنشئ ثلاثة أعمدة بنفس العرض."},
+{q:"أي دالة تربط حدثًا بعنصر؟",opts:["addEventListener","createElement","parseInt"],correct:0,why:"addEventListener تربط الحدث بدالة."},
+{q:"أي أمر يختار عنصرًا من الصفحة؟",opts:["document.querySelector","console.select","Math.query"],correct:0,why:"querySelector يختار العنصر بمحدد CSS."},
+{q:"ما نوع قيمة input.value دائمًا؟",opts:["نص String","رقم Number","Boolean"],correct:0,why:"قيمة الحقل نص، وتحوّل لرقم بـ Number()."},
+{q:"إذا كانت const sq = (n) => n * n فما ناتج sq(5)؟",opts:["10","25","55"],correct:1,why:"5 × 5 = 25."},
+{q:"المتغير المعرَّف داخل دالة بـ let يُرى...؟",opts:["داخل الدالة فقط","في الصفحة كلها","في كل الملفات"],correct:0,why:"نطاقه محلي داخل الدالة."},
+{q:"ماذا تُرجع [1, 2].map(n => n + 1)؟",opts:["[2,3]","[1,2]","[3]"],correct:0,why:"map تحوّل كل عنصر وتُرجع مصفوفة جديدة."},
+{q:"ما أكبر قيمة يمكن أن تُرجعها Math.random()؟",opts:["أقل من 1","تساوي 1 تمامًا","أقل من 10"],correct:0,why:"المجال من 0 إلى أقل من 1."},
+{q:"أين نضع الكود الذي قد يسبب خطأ؟",opts:["داخل try","داخل catch فقط","بعد finally فقط"],correct:0,why:"نضعه في try ونعالج الخطأ في catch."},
+{q:"ما ناتج JSON.stringify({a: 1})؟",opts:['{"a":1}',"{a:1}","[1]"],correct:0,why:"يحوّل الكائن إلى نص JSON."},
+{q:"أي دالة تحفظ قيمة في localStorage؟",opts:["setItem","saveAll","putData"],correct:0,why:"setItem(key, value)."},
+{q:"بعد createElement ما الخطوة اللازمة ليظهر العنصر؟",opts:["إضافته للصفحة بـ appendChild","لا شيء","حذفه"],correct:0,why:"العنصر الجديد لا يظهر حتى يُضاف للصفحة."},
+{q:"أي دالة تكرر تنفيذ كود كل فترة زمنية؟",opts:["setInterval","setTimeout","parseInt"],correct:0,why:"setInterval تكرر، وsetTimeout مرة واحدة."},
+{q:"ما الذي نستخدمه لالتقاط خطأ طلب fetch عند العمل بـ Promise؟",opts:["catch","else","break"],correct:0,why:".catch تعالج رفض الـ Promise."},
+{q:"ماذا تفعل await؟",opts:["تنتظر اكتمال Promise","تحذف الدالة","تكرر الحلقة"],correct:0,why:"await توقف الدالة async حتى تكتمل النتيجة."},
+{q:"ما فائدة اختبار الحالات الحدية؟",opts:["اكتشاف أخطاء في القيم الطرفية","تلوين الكود","تسريع الإنترنت"],correct:0,why:"مثل الصفر والقيم الفارغة وأكبر وأصغر قيمة."},
+{q:"ماذا تُعطي const [x, y] = [1, 2] للمتغير y؟",opts:["2","1","[1,2]"],correct:0,why:"التفكيك يأخذ العناصر بالترتيب."},
+{q:"ماذا تفعل ...nums في تعريف دالة؟",opts:["تجمع بقية المعاملات في مصفوفة","تحذف المعاملات","تطبع المعاملات"],correct:0,why:"هذه هي rest parameters."},
+{q:"في المتصفح، أي خاصية تجعل ملف script وحدة؟",opts:['type="module"','type="text"','rel="module"'],correct:0,why:"<script type=\"module\">."},
+{q:"لماذا نتجنب innerHTML مع نص المستخدم؟",opts:["قد يسمح بحقن HTML أو JavaScript ضار","لأنه أبطأ دائمًا","لأنه لا يعمل"],correct:0,why:"textContent أكثر أمانًا لأنه لا يفسّر HTML."},
+{q:"ما ناتج calculate(6, '*', 7) في المشروع؟",opts:["42","13","خطأ"],correct:0,why:"6 × 7 = 42."}
+,
+{q:"متى يُستخدم المعامل الثلاثي؟",opts:["لتعيين سريع بدل if بسيط","بدل الحلقات فقط","بدل HTML"],correct:0,why:"اختصار لـ if بسيط."},
+{q:"break داخل الحلقة تفعل ماذا؟",opts:["تخرج من الحلقة","تخطّي دورة فقط","تعيد تشغيل الصفحة"],correct:0,why:"break تنهي الحلقة."},
+{q:"reduce تستخدم غالبًا لـ؟",opts:["تجميع قيمة واحدة من مصفوفة","تلوين النص","إنشاء ملف CSS"],correct:0,why:"تجميع مثل المجموع."},
+{q:"getMonth يبدأ من؟",opts:["0","1","12"],correct:0,why:"فهرسة صفرية."},
+{q:"أي قيمة باطلة؟",opts:["0","1","'نص'"],correct:0,why:"0 باطل في Boolean."},
+{q:"trim يحذف؟",opts:["فراغات الطرفين","كل الأحرف","الأرقام فقط"],correct:0,why:"الفراغات من البداية والنهاية."},
+{q:"في لعبة التخمين إذا كان الرقم أصغر من السر؟",opts:["أعلى","أقل","صحيح"],correct:0,why:"نطلب رقمًا أعلى."},
+{q:"remaining في قائمة المهام تعد؟",opts:["غير المكتملة","كل المهام","المكتملة فقط"],correct:0,why:"filter على !done."},
+{q:"transition في CSS؟",opts:["تنعيم التغيير","حذف العنصر","تشغيل JS"],correct:0,why:"انتقال سلس."},
+{q:"لبناء صفحة تفاعلية تحتاج؟",opts:["HTML وCSS وJS","CSS فقط","JSON فقط"],correct:0,why:"الثلاثة معًا."}
+];
+
+/* ================= معاينات حية لدروس HTML وCSS والـ DOM (index = رقم الدرس - 1) ================= */
+const previews={
+15:`<h1>عنوان</h1><p>هذا المحتوى الظاهر داخل body.</p>`,
+16:`<h1>عنوان رئيسي</h1><h2>عنوان فرعي</h2><p>فقرة عادية.</p><a href="#" onclick="return false">رابط</a>`,
+17:`<img alt="مربع أزرق" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><rect width='80' height='80' rx='10' fill='%234263eb'/></svg>"><ul><li>عنصر 1</li><li>عنصر 2</li></ul>`,
+18:`<form onsubmit="event.preventDefault();document.getElementById('r').textContent='تم الإرسال: '+this.n.value"><label>الاسم: <input name="n" type="text"></label> <button type="submit">إرسال</button></form><p id="r"></p>`,
+19:`<style>#top{background:#e9efff;padding:8px}.menu{color:#4263eb}</style><header id="top">header (id="top")</header><nav class="menu">nav (class="menu")</nav><main>main</main>`,
+20:`<style>h1{color:#4263eb;font-size:24px}p{line-height:1.6}</style><h1>عنوان ملوّن</h1><p>فقرة منسّقة بـ CSS.</p>`,
+21:`<style>p{color:#4263eb}.card{background:#f4f7fb;padding:8px;margin:6px 0}button:hover{opacity:.6}</style><p>فقرة زرقاء</p><div class="card">بطاقة</div><button>مرّر الفأرة فوقي</button>`,
+22:`<style>.box{width:200px;padding:16px;border:2px solid #333;box-sizing:border-box;margin:8px;background:#fff7db}</style><div class="box">صندوق</div>`,
+23:`<style>.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.row div{background:#e9efff;padding:10px}</style><div class="row"><div>1</div><div>2</div><div>3</div></div>`,
+24:`<style>.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.grid div{background:#e9efff;padding:10px;text-align:center}@media(max-width:700px){.grid{grid-template-columns:1fr}}</style><div class="grid"><div>1</div><div>2</div><div>3</div></div>`,
+25:`<button id="btn">اضغط</button><p id="out"></p><script>document.querySelector('#btn').addEventListener('click',()=>{document.querySelector('#out').textContent='تم الضغط'})<\/script>`,
+26:`<p id="message">قبل التغيير</p><button onclick="document.querySelector('#message').textContent='تم التغيير'">غيّر النص</button>`,
+27:`<input id="name" placeholder="اكتب اسمك"> <button id="b">اقرأ القيمة</button><p id="o"></p><script>document.getElementById('b').onclick=()=>{document.getElementById('o').textContent='القيمة: '+document.querySelector('#name').value}<\/script>`,
+35:`<ul id="list"></ul><button id="add">أضف عنصرًا</button><script>let n=0;document.getElementById('add').onclick=()=>{const li=document.createElement('li');li.textContent='عنصر جديد '+(++n);document.getElementById('list').appendChild(li)}<\/script>`
+};
+function previewDoc(body){return '<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><body style="font-family:system-ui,Tahoma,Arial,sans-serif;padding:10px;line-height:1.6;color:#172033">'+body+'</body></html>'}
+
+const samples={
+  loop:"for (let i = 1; i <= 5; i++) {\n  console.log('رقم', i);\n}",
+  fn:"function square(n) {\n  return n * n;\n}\nconsole.log(square(7));",
+  arr:"const nums = [3, 8, 1, 9];\nconsole.log(Math.max(...nums));\nconsole.log([...nums].sort((a, b) => a - b));",
+  obj:"const student = {name: 'ساهر', marks: [90, 85, 95]};\nconst avg = student.marks.reduce((t, m) => t + m, 0) / student.marks.length;\nconsole.log(student.name, avg);",
+  timer:"console.log('بدأ');\nsetTimeout(() => console.log('بعد ثانية'), 1000);\nconsole.log('آخر سطر في الكود');"
+};
+
+/* ================= الحالة وحفظ التقدم ================= */
+const STORE_KEY='saher_progress_v2', STORE_BAK='saher_progress_v2_bak', OLD_KEY='saher_progress_v1';
+const THEME_KEY='saher_theme_v1', EDITOR_DRAFT_KEY='saher_editor_draft_v1';
+let storageOK=true;
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){storageOK=false;return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v);return true}catch(e){storageOK=false;return false}}
+function lsDel(k){try{localStorage.removeItem(k)}catch(e){}}
+try{localStorage.setItem('__t','1');localStorage.removeItem('__t')}catch(e){storageOK=false}
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+
+let current=0, currentExam=null;
+const completedLessons=new Set(), skippedLessons=new Set(), passedExams=new Set();
+let drafts={}, attempts={}, points=0, streak={count:0,last:''}, lastSaved=0;
+const EXAM_COUNT=Math.floor(lessons.length/5);
+
+function dateStr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function currentStreak(){
+  if(!streak.last)return 0;
+  const y=new Date();y.setDate(y.getDate()-1);
+  return (streak.last===dateStr(new Date())||streak.last===dateStr(y))?streak.count:0;
+}
+function bumpStreak(){
+  const t=dateStr(new Date());
+  if(streak.last===t)return;
+  const y=new Date();y.setDate(y.getDate()-1);
+  streak.count=streak.last===dateStr(y)?streak.count+1:1;
+  streak.last=t;
+}
+function snapshot(){
+  return {v:2,completed:[...completedLessons],skipped:[...skippedLessons],passed:[...passedExams],drafts,attempts,points,streak,pos:{lesson:current,exam:currentExam},ts:Date.now()};
+}
+function intList(a,max,min){return Array.isArray(a)?[...new Set(a.filter(n=>Number.isInteger(n)&&n>=(min||0)&&n<max))]:[]}
+function resetState(){
+  completedLessons.clear();skippedLessons.clear();passedExams.clear();
+  drafts={};attempts={};points=0;streak={count:0,last:''};current=0;currentExam=null;
+}
+function applySnapshot(d){
+  resetState();
+  if(!d||typeof d!=='object')return;
+  intList(d.completed,lessons.length).forEach(i=>completedLessons.add(i));
+  intList(d.skipped,lessons.length).forEach(i=>{if(!completedLessons.has(i))skippedLessons.add(i)});
+  intList(d.passed,EXAM_COUNT+1,1).forEach(i=>passedExams.add(i));
+  if(d.drafts&&typeof d.drafts==='object'){
+    Object.keys(d.drafts).forEach(k=>{
+      const i=Number(k),v=d.drafts[k];
+      if(Number.isInteger(i)&&i>=0&&i<lessons.length&&v&&typeof v==='object'){
+        drafts[i]={code:String(v.code||'').slice(0,6000),answer:Number.isInteger(v.answer)?v.answer:null,verifiedCode:typeof v.verifiedCode==='string'?v.verifiedCode:null};
+      }
+    });
+  }
+  if(d.attempts&&typeof d.attempts==='object'){
+    Object.keys(d.attempts).forEach(k=>{const i=Number(k),n=d.attempts[k];if(Number.isInteger(i)&&i>=0&&i<lessons.length&&Number.isInteger(n)&&n>0)attempts[i]=Math.min(n,999)});
+  }
+  if(Number.isInteger(d.points)&&d.points>0)points=d.points;
+  if(d.streak&&typeof d.streak.last==='string'&&Number.isInteger(d.streak.count)){streak={count:d.streak.count,last:d.streak.last.slice(0,10)}}
+  const p=d.pos||{};
+  if(Number.isInteger(p.lesson)&&p.lesson>=0&&p.lesson<lessons.length)current=p.lesson;
+  if(Number.isInteger(p.exam)&&p.exam>=1&&p.exam<=EXAM_COUNT&&examUnlocked(p.exam))currentExam=p.exam;
+  if(!isLessonUnlocked(current))current=firstOpenLesson();
+}
+function firstOpenLesson(){
+  for(let i=0;i<lessons.length;i++){
+    if(completedLessons.has(i))continue;
+    return isLessonUnlocked(i)?i:Math.max(0,i-1);
+  }
+  return lessons.length-1;
+}
+function parseStored(raw){try{return JSON.parse(raw)}catch(e){return null}}
+function loadProgress(){
+  let d=null,migrated=false;
+  const raw=lsGet(STORE_KEY);
+  if(raw)d=parseStored(raw);
+  if(!d){const bak=lsGet(STORE_BAK);if(bak)d=parseStored(bak)}
+  if(!d){
+    const old=lsGet(OLD_KEY);
+    if(old){
+      try{d=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(old),c=>c.charCodeAt(0))));migrated=true}catch(e){d=null}
+    }
+  }
+  if(d)applySnapshot(d);
+  if(migrated)saveNow();
+}
+function saveNow(){
+  const s=JSON.stringify(snapshot());
+  const prev=lsGet(STORE_KEY);
+  const ok=lsSet(STORE_KEY,s);
+  if(ok&&prev&&prev!==s)lsSet(STORE_BAK,prev);
+  lastSaved=Date.now();
+  showStorageWarn(!ok||!storageOK);
+}
+let saveTimer=null;
+function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,300)}
+window.addEventListener('pagehide',saveNow);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveNow()});
+function showStorageWarn(bad){
+  const w=document.getElementById('storageWarn');
+  if(w)w.hidden=!bad;
+}
+function getDraft(i){return drafts[i]||(drafts[i]={code:'',answer:null,verifiedCode:null})}
+
+/* ================= أدوات عامة ================= */
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function shuffle(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
+function startIndex(examNo){return (examNo-1)*5}
+function examUnlocked(n){return Array.from({length:5},(_,j)=>completedLessons.has(startIndex(n)+j)).every(Boolean)}
+function isLessonUnlocked(i){
+  if(i===0||completedLessons.has(i))return true;
+  if(!(completedLessons.has(i-1)||skippedLessons.has(i-1)))return false;
+  return i%5!==0||passedExams.has(i/5);
+}
+
+/* ================= تشغيل الكود بأمان (Web Worker + مهلة زمنية) ================= */
+function workerMain(){
+  const AF=Object.getPrototypeOf(async function(){}).constructor;
+  const fmt=a=>{
+    if(typeof a==='string')return a;
+    if(typeof a==='undefined')return 'undefined';
+    if(typeof a==='function')return String(a);
+    if(typeof a==='object'&&a!==null){try{return JSON.stringify(a)}catch(e){}}
+    return String(a);
+  };
+  let count=0;
+  const send=(t,v)=>postMessage({t:t,v:v});
+  const log=(...a)=>{if(count++<500)send('log',a.map(fmt).join(' '))};
+  const con={log:log,info:log,warn:log,error:log};
+  const mem={};
+  const ls={
+    setItem:(k,v)=>{mem[k]=String(v)},
+    getItem:k=>(Object.prototype.hasOwnProperty.call(mem,k)?mem[k]:null),
+    removeItem:k=>{delete mem[k]},
+    clear:()=>{Object.keys(mem).forEach(k=>delete mem[k])},
+    key:i=>(Object.keys(mem)[i]===undefined?null:Object.keys(mem)[i]),
+    get length(){return Object.keys(mem).length}
+  };
+  const oST=self.setTimeout.bind(self),oSI=self.setInterval.bind(self),oCT=self.clearTimeout.bind(self),oCI=self.clearInterval.bind(self);
+  const pending=new Set();
+  self.setTimeout=(fn,ms,...a)=>{const id=oST(()=>{pending.delete(id);if(typeof fn==='function')fn(...a)},ms);pending.add(id);return id};
+  self.clearTimeout=id=>{pending.delete(id);oCT(id)};
+  self.setInterval=(fn,ms,...a)=>{const id=oSI(()=>{if(typeof fn==='function')fn(...a)},ms);pending.add(id);return id};
+  self.clearInterval=id=>{pending.delete(id);oCI(id)};
+  self.onmessage=async e=>{
+    try{await new AF('console','localStorage','"use strict";\n'+e.data)(con,ls)}
+    catch(err){send('err',String(err&&err.message||err))}
+    await new Promise(r=>oST(r,30));
+    const t0=Date.now();
+    while(pending.size>0&&Date.now()-t0<2500){await new Promise(r=>oST(r,20))}
+    send('done');
+  };
+}
+async function fallbackRun(code){
+  const logs=[];let err=null;
+  const fmt=a=>{if(typeof a==='string')return a;if(typeof a==='object'&&a!==null){try{return JSON.stringify(a)}catch(e){}}return String(a)};
+  const log=(...a)=>{logs.push(a.map(fmt).join(' '))};
+  const con={log:log,info:log,warn:log,error:log};
+  const mem={};
+  const ls={setItem:(k,v)=>{mem[k]=String(v)},getItem:k=>(k in mem?mem[k]:null),removeItem:k=>{delete mem[k]},clear:()=>{for(const k in mem)delete mem[k]}};
+  try{
+    const AF=Object.getPrototypeOf(async function(){}).constructor;
+    await new AF('console','localStorage','"use strict";\n'+code)(con,ls);
+  }catch(e){err=String(e&&e.message||e)}
+  return {logs:logs,err:err,timedOut:false};
+}
+function runCode(code,timeout){
+  timeout=timeout||4000;
+  return new Promise(resolve=>{
+    let w=null,url=null,finished=false,timer=null;
+    const logs=[];let err=null,timedOut=false;
+    const finish=()=>{
+      if(finished)return;finished=true;
+      clearTimeout(timer);
+      try{if(w)w.terminate()}catch(e){}
+      try{if(url)URL.revokeObjectURL(url)}catch(e){}
+      resolve({logs:logs,err:err,timedOut:timedOut});
+    };
+    try{
+      url=URL.createObjectURL(new Blob(['('+workerMain.toString()+')()'],{type:'text/javascript'}));
+      w=new Worker(url);
+    }catch(e){
+      try{if(url)URL.revokeObjectURL(url)}catch(_){}
+      fallbackRun(code).then(resolve);
+      return;
+    }
+    timer=setTimeout(()=>{timedOut=true;finish()},timeout);
+    w.onmessage=ev=>{
+      const d=ev.data||{};
+      if(d.t==='log')logs.push(d.v);
+      else if(d.t==='err')err=d.v;
+      else if(d.t==='done')finish();
+    };
+    w.onerror=ev=>{err=err||ev.message||'خطأ غير معروف';if(ev.preventDefault)ev.preventDefault();finish()};
+    w.postMessage(code);
+  });
+}
+function friendlyErr(msg){
+  let m=String(msg);
+  if(/(document|window|alert|prompt) is not defined/.test(m))m+=' — هذا المحرر يشغّل JavaScript بدون صفحة، فاستخدم console.log لعرض النتيجة.';
+  return m;
+}
+function resultText(r){
+  let out=r.logs.join('\n');
+  if(r.err)out+=(out?'\n':'')+'⚠️ خطأ: '+friendlyErr(r.err);
+  if(r.timedOut)out+=(out?'\n':'')+'⏱️ تم إيقاف التنفيذ لأنه استغرق وقتًا طويلًا (ربما حلقة لا نهائية).';
+  return out||'(لا يوجد ناتج)';
+}
+async function simulate(code){return resultText(await runCode(code))}
+
+/* ================= فحص كود الطالب بمقارنة الناتج ================= */
+const expectedCache={};
+async function expectedFor(i){if(!expectedCache[i])expectedCache[i]=await runCode(lessons[i].ex);return expectedCache[i]}
+function compact(s){return String(s).replace(/\/\/.*$/gm,'').replace(/\/\*[\s\S]*?\*\//g,'').replace(/\s+/g,'')}
+async function verifyLessonCode(idx,typed,attemptNo){
+  const l=lessons[idx];
+  const r=await runCode(typed);
+  if(r.timedOut)return {ok:false,msg:'⏱️ كودك استغرق وقتًا طويلًا (ربما حلقة لا نهائية). راجع شرط الحلقة وتحديث العداد.'};
+  if(r.err)return {ok:false,msg:'⚠️ في كودك خطأ: '+friendlyErr(r.err)};
+  if(l.nd){
+    const last=r.logs[r.logs.length-1];
+    if(l.must.every(t=>typed.includes(t))&&last===l.fixedLast)return {ok:true};
+    return {ok:false,msg:'الكود لا يطابق المطلوب. تأكد من استخدام '+l.must.join(' و ')+' كما في المثال، وأن آخر سطر يطبع '+l.fixedLast+'.'};
+  }
+  const exp=await expectedFor(idx);
+  const a=r.logs,b=exp.logs,n=Math.max(a.length,b.length);
+  let k=0;
+  while(k<n&&a[k]===b[k])k++;
+  if(k<n){
+    let msg='الناتج غير مطابق للمثال. ';
+    msg+=a.length!==b.length?'عدد الأسطر المطبوعة عندك '+a.length+' والمطلوب '+b.length+'.':'الاختلاف في السطر '+(k+1)+'.';
+    if(attemptNo>=2)msg+='\nالمطلوب في السطر '+(k+1)+': '+(b[k]===undefined?'(لا شيء)':b[k])+'\nعندك: '+(a[k]===undefined?'(لا شيء)':a[k]);
+    return {ok:false,msg:msg};
+  }
+  if(compact(typed).length<compact(l.ex).length*0.6)return {ok:false,msg:'ناتج كودك صحيح لكنه أقصر كثيرًا من المثال. اكتب الأوامر كاملة كما في المثال، لا الناتج فقط.'};
+  return {ok:true};
+}
+
+/* ================= تلوين الكود ================= */
+function highlightCode(code) {
+  const esc = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const parts = [];
+  const src = String(code);
+  let i = 0;
+  const push = (type, text) => { if (text) parts.push({type, text}); };
+  while (i < src.length) {
+    if (src[i] === '/' && src[i+1] === '/') {
+      let j = i + 2;
+      while (j < src.length && src[j] !== '\n') j++;
+      push('cm', src.slice(i, j));
+      i = j;
+      continue;
+    }
+    if (src[i] === '/' && src[i+1] === '*') {
+      let j = i + 2;
+      while (j < src.length && !(src[j] === '*' && src[j+1] === '/')) j++;
+      j = Math.min(j + 2, src.length);
+      push('cm', src.slice(i, j));
+      i = j;
+      continue;
+    }
+    if (src[i] === '"' || src[i] === "'" || src[i] === '`') {
+      const q = src[i];
+      let j = i + 1;
+      while (j < src.length) {
+        if (src[j] === '\\') { j += 2; continue; }
+        if (src[j] === q) { j++; break; }
+        j++;
+      }
+      push('str', src.slice(i, j));
+      i = j;
+      continue;
+    }
+    if (/[0-9]/.test(src[i]) && (i === 0 || !/[A-Za-z_$]/.test(src[i-1]))) {
+      let j = i;
+      while (j < src.length && /[0-9._]/.test(src[j])) j++;
+      push('num', src.slice(i, j));
+      i = j;
+      continue;
+    }
+    if (/[A-Za-z_$]/.test(src[i])) {
+      let j = i + 1;
+      while (j < src.length && /[A-Za-z0-9_$]/.test(src[j])) j++;
+      const word = src.slice(i, j);
+      const kws = /^(const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|new|typeof|instanceof|class|extends|import|export|default|from|async|await|try|catch|finally|throw|of|in|this|super|static|yield|void|delete)$/;
+      const bools = /^(true|false|null|undefined|NaN|Infinity)$/;
+      if (kws.test(word)) push('kw', word);
+      else if (bools.test(word)) push('bool', word);
+      else {
+        let k = j;
+        while (k < src.length && /\s/.test(src[k])) k++;
+        if (src[k] === '(') push('fn', word);
+        else push('plain', word);
+      }
+      i = j;
+      continue;
+    }
+    push('plain', src[i]);
+    i++;
+  }
+  return parts.map(p => {
+    const t = esc(p.text);
+    if (p.type === 'plain') return t;
+    return '<span class="tok-' + p.type + '">' + t + '</span>';
+  }).join('');
+}
+function syncEditorHighlight(textarea, layer) {
+  if (!textarea || !layer) return;
+  layer.innerHTML = highlightCode(textarea.value) + '\n';
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+}
+
+/* ================= الواجهة ================= */
+const menu=document.getElementById('menu'), content=document.getElementById('content');
+const navTitle=document.getElementById('navTitle');
+const toggleMenu=document.getElementById('toggleMenu');
+function setMenu(open){
+  menu.hidden=!open;
+  toggleMenu.setAttribute('aria-expanded',String(open));
+  toggleMenu.textContent=open?'✕ إغلاق القائمة':'☰ الدروس';
+}
+toggleMenu.addEventListener('click',()=>setMenu(menu.hidden));
+function focusContent(){
+  window.scrollTo(0,0);
+  content.setAttribute('tabindex','-1');
+  try{content.focus({preventScroll:true})}catch(e){}
+}
+function updateProgressBar(){
+  const total=lessons.length;
+  const done=completedLessons.size;
+  const pct=total?Math.round((done/total)*100):0;
+  const totalExams=typeof EXAM_COUNT==='number'?EXAM_COUNT:Math.floor(total/5);
+  const doneExams=passedExams.size;
+  const fill=document.getElementById('progressFill');
+  if(fill)fill.style.width=pct+'%';
+  const dash=document.getElementById('dashFill');
+  if(dash)dash.style.width=pct+'%';
+  const sp=document.getElementById('statPercent');
+  if(sp)sp.textContent=pct+'%';
+  const sl=document.getElementById('statLessons');
+  if(sl)sl.textContent=done+' / '+total;
+  const se=document.getElementById('statExams');
+  if(se)se.textContent=doneExams+' / '+totalExams;
+  const chips=document.getElementById('examChips');
+  if(chips){
+    let h='';
+    for(let n=1;n<=totalExams;n++){
+      const ok=passedExams.has(n);
+      h+='<span class="exam-chip'+(ok?' done':'')+'">'+(ok?'✅':'📝')+' امتحان '+n+'</span>';
+    }
+    chips.innerHTML=h;
+  }
+}
+function updateStats(){
+  const el=document.getElementById('statsLine');
+  if(el)el.textContent='✅ '+completedLessons.size+'/'+lessons.length+' • 📝 '+passedExams.size+'/'+(typeof EXAM_COUNT==='number'?EXAM_COUNT:Math.floor(lessons.length/5))+' • ⭐ '+points+' • 🔥 '+currentStreak();
+  updateProgressBar();
+}
+function renderMenu(){
+  menu.innerHTML='';
+  lessons.forEach((l,i)=>{
+    const b=document.createElement('button');
+    const unlocked=isLessonUnlocked(i);
+    const isCur=!currentExam&&i===current;
+    b.className='navbtn'+(isCur?' active':'');
+    b.disabled=!unlocked;
+    if(isCur)b.setAttribute('aria-current','true');
+    const icon=completedLessons.has(i)?'✅ ':skippedLessons.has(i)?'⏭️ ':unlocked?'📘 ':'🔒 ';
+    b.textContent=icon+l.title;
+    b.onclick=()=>goLesson(i);
+    menu.appendChild(b);
+    if((i+1)%5===0){
+      const n=(i+1)/5;
+      const eu=examUnlocked(n);
+      const e=document.createElement('button');
+      e.className='navbtn'+(currentExam===n?' active':'');
+      e.disabled=!eu;
+      if(currentExam===n)e.setAttribute('aria-current','true');
+      e.textContent=(passedExams.has(n)?'✅ ':eu?'📝 ':'🔒 ')+'امتحان بعد الدرس '+(i+1);
+      e.onclick=()=>goExam(n);
+      menu.appendChild(e);
+    }
+  });
+  navTitle.textContent=currentExam?'امتحان '+currentExam:lessons[current].title;
+  updateProgressBar();
+  updateStats();
+}
+function goLesson(i){
+  if(!isLessonUnlocked(i))return;
+  current=i;currentExam=null;
+  setMenu(false);
+  renderMenu();renderLesson();focusContent();saveNow();
+}
+function goExam(n){
+  if(!examUnlocked(n))return;
+  currentExam=n;
+  setMenu(false);
+  renderMenu();renderExam(n);focusContent();saveNow();
+}
+
+function lessonCodePassed(){
+  const ta=document.getElementById('studentCode');
+  const d=drafts[current];
+  return !!(ta&&d&&d.verifiedCode!==null&&ta.value.trim()!==''&&ta.value===d.verifiedCode);
+}
+function lessonQuestionPassed(){
+  const chosen=document.querySelector('input[name="answer"]:checked');
+  return !!chosen&&Number(chosen.value)===lessons[current].correct;
+}
+function updateContinueState(){
+  const btn=document.getElementById('completeLesson');
+  if(!btn)return;
+  const done=completedLessons.has(current);
+  const codeOk=lessonCodePassed(), qOk=lessonQuestionPassed();
+  btn.disabled=done||!(codeOk&&qOk);
+  btn.textContent=done?'تم اجتياز الدرس ✓':'اجتياز الدرس وفتح التالي';
+  const state=document.getElementById('requirementsState');
+  if(!state)return;
+  if(done){state.className='lesson-lock ok';state.textContent='✅ أنجزت هذا الدرس سابقًا.';return}
+  state.className='lesson-lock';
+  state.textContent='حالة التقدم: '+(codeOk?'✅ الكود صحيح':'🔒 راجع كودك حتى يُقبل')+' — '+(qOk?'✅ إجابة السؤال صحيحة':'🔒 أجب عن السؤال إجابة صحيحة');
+}
+function addNextButton(){
+  const old=document.getElementById('goNext');
+  if(old)old.remove();
+  const btn=document.getElementById('completeLesson');
+  if(!btn)return;
+  const isGroupEnd=(current+1)%5===0;
+  if(isGroupEnd){
+    const n=(current+1)/5;
+    const next=document.createElement('button');
+    next.id='goNext';
+    if(examUnlocked(n)){
+      next.textContent=passedExams.has(n)?'مراجعة الامتحان ←':'الانتقال إلى الامتحان ←';
+      next.onclick=()=>goExam(n);
+    }else{
+      next.textContent='أكمل الدروس المتخطاة لفتح الامتحان';
+      next.disabled=true;
+    }
+    btn.insertAdjacentElement('afterend',next);
+  }else if(current<lessons.length-1){
+    const next=document.createElement('button');
+    next.id='goNext';next.textContent='الانتقال إلى الدرس التالي ←';
+    next.onclick=()=>goLesson(current+1);
+    btn.insertAdjacentElement('afterend',next);
+  }
+}
+
+function renderLesson(){
+  currentExam=null;
+  const idx=current;
+  const l=lessons[idx];
+  const alreadyDone=completedLessons.has(idx);
+  const d=getDraft(idx);
+  const isGroupEnd=(idx+1)%5===0;
+  const canSkip=!alreadyDone&&!isGroupEnd&&idx<lessons.length-1;
+  const showSol=!alreadyDone&&(attempts[idx]||0)>=3;
+  const pv=previews[idx];
+  content.innerHTML=`
+  <span class="tag">${escapeHTML(l.tag)}</span><h2>${escapeHTML(l.title)}</h2><p>${escapeHTML(l.desc)}</p>
+  <h3>الكود الذي نشرحه</h3><pre class="hl-pre"><code id="lessonCodeHl"></code></pre>
+  <h3>الشرح</h3><p>${escapeHTML(l.explain)}</p>
+  <div class="actions"><button id="run">جرّب المثال</button><button class="secondary" id="copy">نسخ الكود</button></div>
+  <div class="output" id="output">اضغط «جرّب المثال» لعرض الناتج هنا.</div>
+  ${pv?'<h3>👁️ معاينة حية</h3><iframe class="pv" id="pvFrame" sandbox="allow-scripts allow-forms" title="معاينة حية"></iframe><p class="muted">هذه هي النتيجة الفعلية في المتصفح.</p>':''}
+  <div class="quiz"><h3>✍️ الخطوة الأولى: اكتب الكود بنفسك</h3>
+  <p>أعد كتابة المثال في المربع التالي ثم اضغط «راجع كودي». يُقبل أي كود يعطي نفس الناتج المطلوب، ولا يشترط تطابق الحروف.</p>
+  <div class="editor-wrap" style="min-height:160px">
+  <pre class="hl-layer" id="studentHl" aria-hidden="true"></pre>
+  <textarea id="studentCode" class="hl-input" rows="7" style="min-height:160px" spellcheck="false" placeholder="اكتب كود JavaScript هنا...">${escapeHTML(d.code)}</textarea>
+  </div>
+  <div class="actions"><button id="checkCode">راجع كودي</button><button class="secondary" id="clearCode">مسح المربع</button><button class="secondary" id="showSolution" ${showSol?'':'hidden'}>💡 أظهر لي الحل</button></div><div class="feedback" id="codeFeedback" style="white-space:pre-wrap"></div></div>
+  <div class="quiz"><h3>🧠 الخطوة الثانية: سؤال نهاية الدرس</h3><p>${escapeHTML(l.q)}</p><div id="options">${l.opts.map((o,i)=>`<label><input type="radio" name="answer" value="${i}" ${d.answer===i?'checked':''}> ${escapeHTML(o)}</label>`).join('')}</div><button id="check">تحقق من الإجابة</button><div class="feedback" id="feedback" aria-atomic="true"></div></div>
+  <div class="lesson-lock" id="requirementsState"></div>
+  <div class="actions"><button class="secondary" id="prev" ${idx===0?'disabled':''}>الدرس السابق</button><button id="completeLesson" disabled>اجتياز الدرس وفتح التالي</button>${canSkip?'<button class="secondary" id="skipLesson">⏭️ تخطي مؤقتًا</button>':''}</div>
+  <p class="muted">الدرس ${idx+1} من ${lessons.length}. بعد كل خمسة دروس، اجتز امتحانًا من خمسة أسئلة لفتح مجموعة الدروس التالية. تقدمك يُحفظ تلقائيًا.</p>`;
+
+  document.getElementById('lessonCodeHl').innerHTML=highlightCode(l.ex);
+  if(pv)document.getElementById('pvFrame').srcdoc=previewDoc(pv);
+
+  document.getElementById('run').onclick=async()=>{
+    const out=document.getElementById('output');
+    out.textContent='⏳ جارٍ التنفيذ...';
+    const t=await simulate(l.run);
+    if(current===idx&&!currentExam)out.textContent=t;
+  };
+  document.getElementById('copy').onclick=async()=>{
+    const out=document.getElementById('output');
+    try{await navigator.clipboard.writeText(l.ex);out.textContent='تم نسخ الكود.'}
+    catch(e){out.textContent='النسخ التلقائي غير متاح هنا. حدّد الكود وانسخه يدويًا.'}
+  };
+
+  const codeArea=document.getElementById('studentCode');
+  const studentHl=document.getElementById('studentHl');
+  const fb=document.getElementById('codeFeedback');
+  syncEditorHighlight(codeArea,studentHl);
+  if(lessonCodePassed()){fb.textContent='✅ هذا الكود تم قبوله سابقًا.';fb.style.color='var(--good)'}
+  codeArea.addEventListener('input',()=>{
+    const dd=getDraft(idx);
+    dd.code=codeArea.value;
+    syncEditorHighlight(codeArea,studentHl);
+    if(dd.verifiedCode!==null&&codeArea.value!==dd.verifiedCode)fb.textContent='';
+    scheduleSave();
+    updateContinueState();
+  });
+
+  const checkBtn=document.getElementById('checkCode');
+  checkBtn.onclick=async()=>{
+    const typed=codeArea.value;
+    if(!typed.trim()){fb.textContent='اكتب الكود أولًا ثم راجعه.';fb.style.color='var(--bad)';return}
+    checkBtn.disabled=true;
+    fb.style.color='var(--muted)';fb.textContent='⏳ جارٍ فحص كودك...';
+    const attemptNo=(attempts[idx]||0)+1;
+    const res=await verifyLessonCode(idx,typed,attemptNo);
+    checkBtn.disabled=false;
+    if(res.ok){
+      getDraft(idx).verifiedCode=typed;
+    }else{
+      attempts[idx]=attemptNo;
+    }
+    scheduleSave();
+    if(current!==idx||currentExam||!document.body.contains(checkBtn))return;
+    if(res.ok){fb.textContent='ممتاز! الكود صحيح ✅';fb.style.color='var(--good)'}
+    else{
+      fb.textContent=res.msg;fb.style.color='var(--bad)';
+      if(attemptNo>=3)document.getElementById('showSolution').hidden=false;
+    }
+    updateContinueState();
+  };
+  document.getElementById('clearCode').onclick=()=>{
+    codeArea.value='';
+    getDraft(idx).code='';
+    fb.textContent='';
+    syncEditorHighlight(codeArea,studentHl);
+    scheduleSave();
+    updateContinueState();
+  };
+  document.getElementById('showSolution').onclick=()=>{
+    codeArea.value=l.ex;
+    getDraft(idx).code=l.ex;
+    syncEditorHighlight(codeArea,studentHl);
+    fb.style.color='var(--muted)';
+    fb.textContent='تم وضع الحل في المربع. اقرأه جيدًا ثم اضغط «راجع كودي».';
+    scheduleSave();
+    updateContinueState();
+  };
+
+  document.getElementById('check').onclick=()=>{
+    const chosen=document.querySelector('input[name="answer"]:checked');
+    const f=document.getElementById('feedback');
+    if(!chosen){f.textContent='اختَر إجابة أولًا.';f.style.color='var(--bad)'}
+    else{
+      const ok=Number(chosen.value)===l.correct;
+      f.textContent=(ok?'إجابة صحيحة! ':'إجابة غير صحيحة. ')+l.why;
+      f.style.color=ok?'var(--good)':'var(--bad)';
+    }
+    updateContinueState();
+  };
+  document.querySelectorAll('input[name="answer"]').forEach(el=>el.addEventListener('change',()=>{
+    getDraft(idx).answer=Number(el.value);
+    scheduleSave();
+    updateContinueState();
+  }));
+
+  document.getElementById('prev').onclick=()=>{if(idx>0)goLesson(idx-1)};
+  const skipBtn=document.getElementById('skipLesson');
+  if(skipBtn)skipBtn.onclick=()=>{
+    if(!confirm('سيُفتح الدرس التالي ويبقى هذا الدرس بعلامة ⏭️ لتعود إليه لاحقًا (ولن تستطيع دخول الامتحان قبل إكماله). هل تريد التخطي؟'))return;
+    skippedLessons.add(idx);
+    saveNow();
+    goLesson(idx+1);
+  };
+  document.getElementById('completeLesson').onclick=()=>{
+    if(!lessonCodePassed()||!lessonQuestionPassed())return;
+    const first=!completedLessons.has(idx);
+    completedLessons.add(idx);skippedLessons.delete(idx);
+    if(first){points+=10;bumpStreak()}
+    saveNow();
+    renderMenu();
+    updateContinueState();
+    addNextButton();
+    if(idx===lessons.length-1){
+      const state=document.getElementById('requirementsState');
+      state.textContent='🎉 رائع! أكملت جميع الدروس. اذهب إلى الامتحان الأخير من قائمة الدروس.';
+    }
+  };
+  updateContinueState();
+  if(alreadyDone)addNextButton();
+}
+
+function buildExam(examNo){
+  const start=startIndex(examNo);
+  return lessons.slice(start,start+5).map((l,k)=>{
+    const pool=[{q:l.q,opts:l.opts,correct:l.correct,why:l.why}];
+    if(extras[start+k])pool.push(extras[start+k]);
+    const p=pool[Math.floor(Math.random()*pool.length)];
+    const order=shuffle(p.opts.map((_,i)=>i));
+    return {title:l.title,q:p.q,opts:order.map(i=>p.opts[i]),correct:order.indexOf(p.correct),why:p.why};
+  });
+}
+function renderExam(examNo){
+  currentExam=examNo;
+  const start=startIndex(examNo);
+  if(lessons.slice(start,start+5).length<5){content.innerHTML='<h2>الامتحان غير متاح</h2><p>أضف خمسة دروس كاملة قبل هذا الامتحان.</p>';return}
+  const qs=buildExam(examNo);
+  content.innerHTML=`<span class="tag">امتحان مراجعة</span><h2>امتحان ${examNo} — بعد الدرس ${examNo*5}</h2>
+  ${passedExams.has(examNo)?'<div class="lesson-lock ok">✅ سبق أن اجتزت هذا الامتحان. يمكنك إعادته للمراجعة.</div>':''}
+  <p>خمسة أسئلة من الدروس السابقة (تتغير الأسئلة وترتيب الخيارات في كل محاولة). يجب الإجابة عن الأسئلة الخمسة بشكل صحيح لفتح المجموعة التالية.</p>
+  <form id="examForm">${qs.map((q,i)=>`<div class="quiz"><b>${i+1}. ${escapeHTML(q.q)}</b>${q.opts.map((o,j)=>`<label><input type="radio" name="exam${i}" value="${j}"> ${escapeHTML(o)}</label>`).join('')}<div class="muted">الموضوع: ${escapeHTML(q.title)}</div></div>`).join('')}
+  <div class="actions"><button type="submit">تصحيح الامتحان</button><button type="button" class="secondary" id="retryExam">أسئلة جديدة</button></div></form><div id="examResult" class="output" role="status">أجب عن الأسئلة الخمسة ثم صحح الامتحان.</div><div id="examReview"></div>
+  <div class="actions"><button class="secondary" id="backLessons">العودة إلى الدروس</button></div>`;
+  document.getElementById('examForm').onsubmit=ev=>{
+    ev.preventDefault();
+    const res=document.getElementById('examResult'),rev=document.getElementById('examReview');
+    const answers=qs.map((_,i)=>document.querySelector('input[name="exam'+i+'"]:checked'));
+    if(answers.some(a=>!a)){res.textContent='أجب عن كل الأسئلة الخمسة أولًا.';rev.innerHTML='';return}
+    let score=0,review='';
+    qs.forEach((q,i)=>{
+      const ok=Number(answers[i].value)===q.correct;
+      if(ok)score++;
+      review+='<p><b>السؤال '+(i+1)+':</b> '+(ok?'صحيح ✅':'غير صحيح ❌ — الإجابة الصحيحة: '+escapeHTML(q.opts[q.correct]))+' — '+escapeHTML(q.why)+'</p>';
+    });
+    res.textContent='نتيجتك: '+score+' من 5';
+    rev.innerHTML=review;
+    const note=document.createElement('div');note.className='lesson-lock';
+    if(score===5){
+      const first=!passedExams.has(examNo);
+      passedExams.add(examNo);
+      if(first){points+=20;bumpStreak()}
+      saveNow();
+      renderMenu();
+      note.className='lesson-lock ok';
+      note.textContent=start+5<lessons.length?'🎉 ممتاز! حصلت على 5 من 5. أصبحت الدروس التالية مفتوحة.':'🎉 ممتاز! أنهيت الدورة بالكامل.';
+      rev.appendChild(note);
+      if(start+5<lessons.length){
+        const go=document.createElement('button');go.textContent='ابدأ الدرس التالي ←';
+        go.onclick=()=>goLesson(start+5);
+        rev.appendChild(go);
+      }
+    }else{
+      note.textContent='تحتاج إلى 5 من 5 لفتح المجموعة التالية. راجع الإجابات وجرّب أسئلة جديدة.';
+      rev.appendChild(note);
+    }
+  };
+  document.getElementById('retryExam').onclick=()=>renderExam(examNo);
+  document.getElementById('backLessons').onclick=()=>goLesson(start+4);
+}
+
+/* ================= السمة (ليلي/نهاري) ================= */
+const themeToggle=document.getElementById('themeToggle');
+function applyTheme(isDark){
+  document.body.classList.toggle('dark',isDark);
+  themeToggle.textContent=isDark?'☀️ وضع النهار':'🌙 وضع الليل';
+}
+const savedTheme=lsGet(THEME_KEY);
+const prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+applyTheme(savedTheme?savedTheme==='dark':prefersDark);
+themeToggle.addEventListener('click',()=>{
+  const isDark=!document.body.classList.contains('dark');
+  applyTheme(isDark);
+  lsSet(THEME_KEY,isDark?'dark':'light');
+});
+
+/* ================= النوافذ المنبثقة (محرر + تقدمي) ================= */
+const editorOverlay=document.getElementById('editorOverlay');
+const progressOverlay=document.getElementById('progressOverlay');
+const playgroundCode=document.getElementById('playgroundCode');
+const playgroundOutput=document.getElementById('playgroundOutput');
+const playgroundHl=document.getElementById('playgroundHl');
+let lastFocus=null;
+function openOverlay(ov,focusEl){
+  lastFocus=document.activeElement;
+  ov.hidden=false;
+  if(focusEl)focusEl.focus();
+}
+function closeOverlay(ov){
+  ov.hidden=true;
+  if(lastFocus&&lastFocus.focus)lastFocus.focus();
+}
+document.addEventListener('keydown',e=>{
+  const ov=[editorOverlay,progressOverlay].find(o=>!o.hidden);
+  if(!ov)return;
+  if(e.key==='Escape'){ov===editorOverlay?closeEditor():closeProgress();return}
+  if(e.key==='Tab'){
+    const f=[...ov.querySelectorAll('button,textarea,select,input,a[href]')].filter(el=>!el.disabled&&!el.hidden&&el.offsetParent!==null);
+    if(!f.length)return;
+    const first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+  }
+});
+
+function openEditor(){
+  openOverlay(editorOverlay,null);
+  const saved=lsGet(EDITOR_DRAFT_KEY);
+  if(saved&&!playgroundCode.value.trim())playgroundCode.value=saved;
+  if(!playgroundCode.value.trim())playgroundCode.value="console.log('أهلًا يا ساهر');\nconsole.log(2 + 3);";
+  syncEditorHighlight(playgroundCode,playgroundHl);
+  playgroundCode.focus();
+}
+function closeEditor(){
+  lsSet(EDITOR_DRAFT_KEY,playgroundCode.value);
+  closeOverlay(editorOverlay);
+}
+document.getElementById('openEditor').addEventListener('click',openEditor);
+document.getElementById('closeEditor').addEventListener('click',closeEditor);
+editorOverlay.addEventListener('click',e=>{if(e.target===editorOverlay)closeEditor()});
+const runPg=document.getElementById('runPlayground');
+runPg.addEventListener('click',async()=>{
+  runPg.disabled=true;
+  playgroundOutput.textContent='⏳ جارٍ التنفيذ...';
+  playgroundOutput.textContent=await simulate(playgroundCode.value);
+  runPg.disabled=false;
+  lsSet(EDITOR_DRAFT_KEY,playgroundCode.value);
+});
+document.getElementById('clearPlayground').addEventListener('click',()=>{
+  playgroundCode.value='';
+  playgroundOutput.textContent='تم مسح المحرر.';
+  lsDel(EDITOR_DRAFT_KEY);
+  syncEditorHighlight(playgroundCode,playgroundHl);
+});
+document.getElementById('loadLessonCode').addEventListener('click',()=>{
+  const l=lessons[current];
+  if(!l)return;
+  playgroundCode.value=l.ex;
+  playgroundOutput.textContent='تم تحميل كود الدرس الحالي. اضغط تشغيل للتجربة.';
+  syncEditorHighlight(playgroundCode,playgroundHl);
+  lsSet(EDITOR_DRAFT_KEY,playgroundCode.value);
+});
+document.getElementById('examplePick').addEventListener('change',e=>{
+  const s=samples[e.target.value];
+  if(!s)return;
+  playgroundCode.value=s;
+  playgroundOutput.textContent='تم تحميل المثال. اضغط تشغيل للتجربة.';
+  syncEditorHighlight(playgroundCode,playgroundHl);
+  lsSet(EDITOR_DRAFT_KEY,playgroundCode.value);
+  e.target.value='';
+});
+playgroundCode.addEventListener('input',()=>{
+  syncEditorHighlight(playgroundCode,playgroundHl);
+  lsSet(EDITOR_DRAFT_KEY,playgroundCode.value);
+});
+
+/* ---- نافذة تقدّمي ---- */
+const progMsg=document.getElementById('progMsg');
+function openProgress(){
+  const el=document.getElementById('progStats');
+  el.textContent=
+    'الدروس المنجزة: '+completedLessons.size+' من '+lessons.length+'\n'+
+    'الدروس المتخطاة: '+skippedLessons.size+'\n'+
+    'الامتحانات المُجتازة: '+passedExams.size+' من '+EXAM_COUNT+'\n'+
+    'النقاط: '+points+'\n'+
+    'أيام متتالية: '+currentStreak()+'\n'+
+    'الحفظ: '+(storageOK?'تلقائي داخل هذا المتصفح ✅':'غير متاح ⚠️ — صدّر نسخة احتياطية');
+  progMsg.textContent='';
+  openOverlay(progressOverlay,document.getElementById('closeProgress'));
+}
+function closeProgress(){closeOverlay(progressOverlay)}
+document.getElementById('openProgress').addEventListener('click',openProgress);
+document.getElementById('closeProgress').addEventListener('click',closeProgress);
+progressOverlay.addEventListener('click',e=>{if(e.target===progressOverlay)closeProgress()});
+document.getElementById('exportProgress').addEventListener('click',()=>{
+  saveNow();
+  const blob=new Blob([JSON.stringify(snapshot(),null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='saher-progress.json';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  progMsg.style.color='var(--good)';progMsg.textContent='تم تصدير ملف التقدم.';
+});
+const importFile=document.getElementById('importFile');
+document.getElementById('importProgressBtn').addEventListener('click',()=>importFile.click());
+importFile.addEventListener('change',()=>{
+  const f=importFile.files&&importFile.files[0];
+  if(!f)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const d=parseStored(String(reader.result));
+    if(!d||typeof d!=='object'||!Array.isArray(d.completed)){progMsg.style.color='var(--bad)';progMsg.textContent='الملف غير صالح.';importFile.value='';return}
+    if(!confirm('سيُستبدل تقدمك الحالي بالتقدم الموجود في الملف. هل تريد المتابعة؟')){importFile.value='';return}
+    applySnapshot(d);
+    saveNow();
+    renderMenu();
+    if(currentExam)renderExam(currentExam);else renderLesson();
+    progMsg.style.color='var(--good)';progMsg.textContent='تم استيراد التقدم بنجاح.';
+    importFile.value='';
+  };
+  reader.onerror=()=>{progMsg.style.color='var(--bad)';progMsg.textContent='تعذّرت قراءة الملف.'};
+  reader.readAsText(f);
+});
+document.getElementById('resetProgress').addEventListener('click',()=>{
+  if(!confirm('سيتم حذف كل تقدمك (الدروس والامتحانات والنقاط والأكواد المحفوظة). هل أنت متأكد؟'))return;
+  resetState();
+  lsDel(STORE_KEY);lsDel(STORE_BAK);lsDel(OLD_KEY);
+  saveNow();
+  renderMenu();renderLesson();
+  progMsg.style.color='var(--good)';progMsg.textContent='تمت إعادة ضبط التقدم.';
+});
+
+/* ================= التشغيل ================= */
+loadProgress();
+showStorageWarn(!storageOK);
+renderMenu();
+if(currentExam)renderExam(currentExam);else renderLesson();
+
+</script>
+</body>
+</html>
